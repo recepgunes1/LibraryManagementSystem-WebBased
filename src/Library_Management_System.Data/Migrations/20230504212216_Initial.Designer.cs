@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_Management_System.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230418223325_Initial")]
+    [Migration("20230504212216_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -175,6 +175,9 @@ namespace Library_Management_System.Data.Migrations
                     b.Property<string>("DeletedId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -313,6 +316,29 @@ namespace Library_Management_System.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "544cfcba-e23d-4c50-86cd-49e83dde3093",
+                            ConcurrencyStamp = "f6f88859-77ba-4013-a2cd-47c9464e5deb",
+                            Name = "student",
+                            NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = "2f6131d4-9069-4ce8-9e98-5769565adf97",
+                            ConcurrencyStamp = "e2cafbe0-5acf-404c-82b2-9aaff49ecdfa",
+                            Name = "lecturer",
+                            NormalizedName = "LECTURER"
+                        },
+                        new
+                        {
+                            Id = "1cefd444-adfc-4526-b941-e980fdca86f7",
+                            ConcurrencyStamp = "6fb403bf-917a-49e8-b7e9-324a2ee57ac3",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Library_Management_System.Entity.Entities.User", b =>
@@ -330,9 +356,6 @@ namespace Library_Management_System.Data.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -359,17 +382,8 @@ namespace Library_Management_System.Data.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

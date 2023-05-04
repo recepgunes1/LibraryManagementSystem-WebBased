@@ -1,8 +1,16 @@
-version: '3.2'
+﻿version: '3.3'
 
 services:
-  s_sql_server:
-    container_name: c_sql_server
+  s_lms_web:
+    container_name: c_lms_web
+    image: library_management_system.web
+    build:
+      context: .
+      dockerfile: src/Library_Management_System.Web/Dockerfile
+    depends_on:
+      - s_lms_db
+  s_lms_db:
+    container_name: c_lms_db
     image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
       - "1433:1433"

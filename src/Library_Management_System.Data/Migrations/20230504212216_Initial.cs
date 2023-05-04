@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Library_Management_System.Data.Migrations
 {
     /// <inheritdoc />
@@ -102,13 +104,9 @@ namespace Library_Management_System.Data.Migrations
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false)
@@ -294,6 +292,7 @@ namespace Library_Management_System.Data.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BookId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsReturned = table.Column<bool>(type: "bit", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     BorrowDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReturnDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -319,6 +318,16 @@ namespace Library_Management_System.Data.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1cefd444-adfc-4526-b941-e980fdca86f7", "6fb403bf-917a-49e8-b7e9-324a2ee57ac3", "admin", "ADMIN" },
+                    { "2f6131d4-9069-4ce8-9e98-5769565adf97", "e2cafbe0-5acf-404c-82b2-9aaff49ecdfa", "lecturer", "LECTURER" },
+                    { "544cfcba-e23d-4c50-86cd-49e83dde3093", "f6f88859-77ba-4013-a2cd-47c9464e5deb", "student", "STUDENT" }
                 });
 
             migrationBuilder.CreateIndex(

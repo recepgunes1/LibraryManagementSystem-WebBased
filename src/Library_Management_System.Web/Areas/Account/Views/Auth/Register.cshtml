@@ -1,0 +1,73 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="col-md-6 offset-md-3 my-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Sign Up</h3>
+        </div>
+        <div class="card-body">
+            <form asp-area="Account" asp-controller="Auth" asp-action="Register" method="post">
+                <!-- First Name -->
+                <div class="form-group row mb-3">
+                    <label asp-for="FirstName" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <input asp-for="FirstName" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group row mb-3">
+                    <label asp-for="LastName" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <input asp-for="LastName" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group row mb-3">
+                    <label asp-for="UserName" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <input asp-for="UserName" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group row mb-3">
+                    <label asp-for="Email" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <input asp-for="Email" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group row mb-3">
+                    <label asp-for="Password" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <input asp-for="Password" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Password Confirmation -->
+                <div class="form-group row mb-3">
+                    <label asp-for="PasswordConfirmation" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <input asp-for="PasswordConfirmation" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary btn-block w-100">Sign Up</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="card-footer text-muted">
+            <span><a asp-area="Account" asp-controller="Auth" asp-action="Login">Sign In</a>, if you have an account.</span>
+        </div>
+    </div>
+    <partial name="~/Areas/PartialViews/_DismissibleErrorSummary.cshtml"/>
+</div>

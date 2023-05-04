@@ -32,5 +32,20 @@ public static class ModelBuilderExtensions
         builder.Entity<IdentityUserToken<string>>(p => p.ToTable("UserTokens"));
         builder.Entity<Book>(p => p.HasIndex(i => i.Isbn).IsUnique());
         builder.Entity<Author>(p => p.HasIndex(i => i.FullName).IsUnique());
+
+        builder.Entity<Role>().HasData(
+            new Role() { Name = "student", NormalizedName = "STUDENT", ConcurrencyStamp = Guid.NewGuid().ToString() },
+            new Role() { Name = "lecturer", NormalizedName = "LECTURER", ConcurrencyStamp = Guid.NewGuid().ToString() },
+            new Role() { Name = "admin", NormalizedName = "ADMIN", ConcurrencyStamp = Guid.NewGuid().ToString() }
+        );
+
+        builder.Entity<User>(p =>
+        {
+            p.Ignore(i => i.EmailConfirmed);
+            p.Ignore(i => i.PhoneNumber);
+            p.Ignore(i => i.PhoneNumberConfirmed);
+            p.Ignore(i => i.TwoFactorEnabled);
+        });
+        
     }
 }
