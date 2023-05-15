@@ -1,0 +1,75 @@
+@model CreateBookViewModel
+
+@{
+    ViewData["Title"] = "Create a New Book";
+}
+<div class="row">
+    <div class="col-md-6 offset-md-3 my-3 border-bottom">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <form asp-area="Admin" asp-controller="Book" asp-action="Create" method="post">
+            <div class="row mb-3">
+                <label for="Name" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="Name" id="Name"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Isbn" class="col-sm-2 col-form-label">ISBN</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="Isbn" id="Isbn"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Summary" class="col-sm-2 col-form-label">Summary</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="3" asp-for="Summary" id="Summary"></textarea>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Pages" class="col-sm-2 col-form-label">Pages</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" asp-for="Pages" id="Pages"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Amount" class="col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" asp-for="Amount" id="Amount"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="PublishedDateTime" class="col-sm-2 col-form-label">Published Date</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" asp-for="PublishedDateTime" id="PublishedDateTime"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="CategoryId" class="col-sm-2 col-form-label">Category ID</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="CategoryId" id="CategoryId"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="PublisherId" class="col-sm-2 col-form-label">Publisher ID</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="PublisherId" id="PublisherId"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary w-50">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

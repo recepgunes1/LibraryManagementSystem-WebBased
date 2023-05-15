@@ -1,0 +1,45 @@
+@model EditUserProfileViewModel
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+<div class="border rounded p-5 bg-light m-5">
+    <h3 class="mb-5 border-bottom">@ViewData["Title"]</h3>
+    <form asp-area="Account" asp-controller="User" asp-action="EditProfile" method="post">
+        <div class="row mb-3">
+            <div class="col">
+                <label asp-for="FirstName" class="form-label"></label>
+                <input asp-for="FirstName" class="form-control"/>
+            </div>
+            <div class="col">
+                <label asp-for="LastName" class="form-label"></label>
+                <input asp-for="LastName" class="form-control"/>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control"/>
+            </div>
+            <div class="col">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control" readonly="readonly"/>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label asp-for="PasswordConfirmation" class="form-label"></label>
+                <input asp-for="PasswordConfirmation" class="form-control"/>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <button type="submit" class="btn btn-primary w-100">Save</button>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </form>
+    <partial name="~/Areas/PartialViews/_DismissibleErrorSummary.cshtml"/>
+</div>

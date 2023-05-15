@@ -2,15 +2,15 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B22A8D50-D144-4585-938E-C00AC1BE89A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library_Management_System.Core", "src\Library_Management_System.Core\Library_Management_System.Core.csproj", "{3A65D486-0D89-4711-A1F7-401F3B27E292}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Core", "src\LMS.Core\LMS.Core.csproj", "{3A65D486-0D89-4711-A1F7-401F3B27E292}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library_Management_System.Entity", "src\Library_Management_System.Entity\Library_Management_System.Entity.csproj", "{27EBA939-6A57-496C-AFAD-D356DC0BB4C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Entity", "src\LMS.Entity\LMS.Entity.csproj", "{27EBA939-6A57-496C-AFAD-D356DC0BB4C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library_Management_System.Data", "src\Library_Management_System.Data\Library_Management_System.Data.csproj", "{04F83F7D-6912-4CE5-9B25-4ABFEB8A4AA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Data", "src\LMS.Data\LMS.Data.csproj", "{04F83F7D-6912-4CE5-9B25-4ABFEB8A4AA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library_Management_System.Service", "src\Library_Management_System.Service\Library_Management_System.Service.csproj", "{92314C97-9858-4CE0-957C-D6DD67F5FCBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Service", "src\LMS.Service\LMS.Service.csproj", "{92314C97-9858-4CE0-957C-D6DD67F5FCBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library_Management_System.Web", "src\Library_Management_System.Web\Library_Management_System.Web.csproj", "{366CAD0C-38C9-4D59-9225-5F3085D8A5AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Web", "src\LMS.Web\LMS.Web.csproj", "{366CAD0C-38C9-4D59-9225-5F3085D8A5AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{027CBB40-A030-4C76-88A5-DE6AC621D4F2}"
 	ProjectSection(SolutionItems) = preProject
