@@ -1,4 +1,4 @@
-using LMS.Web.Middlewares;
+//using LMS.Web.Middlewares;
 using LMS.Data.Extensions;
 using LMS.Service.Extensions;
 using NToastNotify;
@@ -29,6 +29,6 @@ app.MapControllerRoute(
     "areas",
     "{area:exists}/{controller}/{action}/{id?}");
 
-app.UseInitialRequest();
+//app.UseInitialRequest();
 app.UseNToastNotify();
 app.Run();

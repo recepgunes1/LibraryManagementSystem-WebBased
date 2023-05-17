@@ -99,7 +99,7 @@ public class AuthorController : Controller
 
     public async Task<IActionResult> Get()
     {
-        var authors = await _authorService.GetAllAuthorsAsync();
+        var authors = await _authorService.GetAllAuthorsNonDeletedAsync();
         return Json(authors.Select(p => new
         {
             p.FullName, p.BackStory, p.AmountOfBooks,

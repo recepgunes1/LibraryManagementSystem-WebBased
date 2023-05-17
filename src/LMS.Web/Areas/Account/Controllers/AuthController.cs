@@ -18,7 +18,6 @@ public class AuthController : Controller
     [AllowAnonymous]
     public IActionResult Login()
     {
-        Console.WriteLine("worked1");
         return View();
     }
 
@@ -27,7 +26,6 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel viewModel)
     {
-        Console.WriteLine("worked2");
         if (!ModelState.IsValid)
         {
             ModelState.AddModelError(string.Empty, "(1) Your credentials aren't confirmed.");
@@ -41,7 +39,7 @@ public class AuthController : Controller
             return View();
         }
 
-        return RedirectToAction("List", "Book", new { area = "Home" });
+        return RedirectToAction("Index", "Home", new { area = "Admin" });
     }
 
     public IActionResult ResetPassword()

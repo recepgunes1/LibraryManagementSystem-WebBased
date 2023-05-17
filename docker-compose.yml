@@ -3,12 +3,11 @@
 services:
   s_lms_web:
     container_name: c_lms_web
-    image: library_management_system.web
+    image: lms.web
     build:
       context: .
-      dockerfile: src/Library_Management_System.Web/Dockerfile
-    depends_on:
-      - s_lms_db
+      dockerfile: src/LMS.Web/Dockerfile
+
   s_lms_db:
     container_name: c_lms_db
     image: mcr.microsoft.com/mssql/server:2022-latest

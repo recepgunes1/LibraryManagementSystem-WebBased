@@ -27,6 +27,6 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, string>
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseSqlServer(
-            "Server=172.19.0.2,1433;Database=Library;User Id=SA;Password=Recep123.;TrustServerCertificate=True;");
+            "Server=172.19.0.2,1433;Database=Library;User Id=SA;Password=Recep123.;TrustServerCertificate=True;MultipleActiveResultSets=True;");
     }
 }

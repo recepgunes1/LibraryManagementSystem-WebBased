@@ -22,21 +22,6 @@ namespace LMS.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AuthorBook", b =>
-                {
-                    b.Property<string>("AuthorsId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BooksId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("AuthorsId", "BooksId");
-
-                    b.HasIndex("BooksId");
-
-                    b.ToTable("AuthorBook");
-                });
-
             modelBuilder.Entity("LMS.Entity.Entities.Author", b =>
                 {
                     b.Property<string>("Id")
@@ -87,6 +72,10 @@ namespace LMS.Data.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CategoryId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -136,6 +125,8 @@ namespace LMS.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("CategoryId");
 
@@ -209,7 +200,6 @@ namespace LMS.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BackStory")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDateTime")
@@ -254,7 +244,6 @@ namespace LMS.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BackStory")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDateTime")
@@ -317,22 +306,22 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "544cfcba-e23d-4c50-86cd-49e83dde3093",
-                            ConcurrencyStamp = "f6f88859-77ba-4013-a2cd-47c9464e5deb",
+                            Id = "b3b0b54f-fed7-45d4-a683-95a77e3b6fff",
+                            ConcurrencyStamp = "981e05b2-bb62-4884-9cf5-f65e49aaeaea",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "2f6131d4-9069-4ce8-9e98-5769565adf97",
-                            ConcurrencyStamp = "e2cafbe0-5acf-404c-82b2-9aaff49ecdfa",
+                            Id = "253dcac2-9df6-4134-92fb-bc635b300f41",
+                            ConcurrencyStamp = "d868d96f-bffc-4ffc-b572-98fad4937a72",
                             Name = "lecturer",
                             NormalizedName = "LECTURER"
                         },
                         new
                         {
-                            Id = "1cefd444-adfc-4526-b941-e980fdca86f7",
-                            ConcurrencyStamp = "6fb403bf-917a-49e8-b7e9-324a2ee57ac3",
+                            Id = "fb514fc1-a30c-4490-847b-bf02c2422778",
+                            ConcurrencyStamp = "03869643-c3f5-42f7-9e5e-446ffa01e891",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -505,23 +494,14 @@ namespace LMS.Data.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AuthorBook", b =>
-                {
-                    b.HasOne("LMS.Entity.Entities.Author", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LMS.Entity.Entities.Book", null)
-                        .WithMany()
-                        .HasForeignKey("BooksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("LMS.Entity.Entities.Book", b =>
                 {
+                    b.HasOne("LMS.Entity.Entities.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LMS.Entity.Entities.Category", "Category")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId")
@@ -533,6 +513,8 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Author");
 
                     b.Navigation("Category");
 
@@ -616,6 +598,11 @@ namespace LMS.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("LMS.Entity.Entities.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("LMS.Entity.Entities.Book", b =>

@@ -30,19 +30,22 @@ public static class ServiceLayerExtensions
         {
             var cookieBuilder = new CookieBuilder
             {
-                Name = "UdemyAppCookie"
+                Name = "LMS_Cookies"
             };
 
             opt.LoginPath = new PathString("/Account/Auth/Login");
             opt.LogoutPath = new PathString("/Account/Auth/Logout");
             opt.AccessDeniedPath = new PathString("/Account/Auth/AccessDenied");
             opt.Cookie = cookieBuilder;
-            opt.ExpireTimeSpan = TimeSpan.FromDays(60);
+            opt.ExpireTimeSpan = TimeSpan.FromDays(16);
             opt.SlidingExpiration = true;
         });
 
         service.AddScoped<IUserService, UserService>();
         service.AddScoped<IAuthorService, AuthorService>();
+        service.AddScoped<ICategoryService, CategoryService>();
+        service.AddScoped<IPublisherService, PublisherService>();
+        service.AddScoped<IBookService, BookService>();
         service.AddAutoMapper(Assembly.GetExecutingAssembly());
         return service;
     }

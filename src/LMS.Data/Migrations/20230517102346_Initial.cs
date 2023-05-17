@@ -39,7 +39,7 @@ namespace LMS.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BackStory = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BackStory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentCategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -65,7 +65,7 @@ namespace LMS.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BackStory = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BackStory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -129,6 +129,7 @@ namespace LMS.Data.Migrations
                     PublishedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PublisherId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -140,6 +141,12 @@ namespace LMS.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Book", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Book_Author_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Author",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Book_Category_CategoryId",
                         column: x => x.CategoryId,
@@ -261,30 +268,6 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AuthorBook",
-                columns: table => new
-                {
-                    AuthorsId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BooksId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuthorBook", x => new { x.AuthorsId, x.BooksId });
-                    table.ForeignKey(
-                        name: "FK_AuthorBook_Author_AuthorsId",
-                        column: x => x.AuthorsId,
-                        principalTable: "Author",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AuthorBook_Book_BooksId",
-                        column: x => x.BooksId,
-                        principalTable: "Book",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Borrow",
                 columns: table => new
                 {
@@ -325,9 +308,9 @@ namespace LMS.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1cefd444-adfc-4526-b941-e980fdca86f7", "6fb403bf-917a-49e8-b7e9-324a2ee57ac3", "admin", "ADMIN" },
-                    { "2f6131d4-9069-4ce8-9e98-5769565adf97", "e2cafbe0-5acf-404c-82b2-9aaff49ecdfa", "lecturer", "LECTURER" },
-                    { "544cfcba-e23d-4c50-86cd-49e83dde3093", "f6f88859-77ba-4013-a2cd-47c9464e5deb", "student", "STUDENT" }
+                    { "253dcac2-9df6-4134-92fb-bc635b300f41", "d868d96f-bffc-4ffc-b572-98fad4937a72", "lecturer", "LECTURER" },
+                    { "b3b0b54f-fed7-45d4-a683-95a77e3b6fff", "981e05b2-bb62-4884-9cf5-f65e49aaeaea", "student", "STUDENT" },
+                    { "fb514fc1-a30c-4490-847b-bf02c2422778", "03869643-c3f5-42f7-9e5e-446ffa01e891", "admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -337,9 +320,9 @@ namespace LMS.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuthorBook_BooksId",
-                table: "AuthorBook",
-                column: "BooksId");
+                name: "IX_Book_AuthorId",
+                table: "Book",
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Book_CategoryId",
@@ -416,9 +399,6 @@ namespace LMS.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AuthorBook");
-
-            migrationBuilder.DropTable(
                 name: "Borrow");
 
             migrationBuilder.DropTable(
@@ -437,9 +417,6 @@ namespace LMS.Data.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Author");
-
-            migrationBuilder.DropTable(
                 name: "Book");
 
             migrationBuilder.DropTable(
@@ -447,6 +424,9 @@ namespace LMS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Author");
 
             migrationBuilder.DropTable(
                 name: "Category");

@@ -10,5 +10,10 @@ public class BookProfile : Profile
     {
         CreateMap<Book, CreateBookViewModel>().ReverseMap();
         CreateMap<Book, UpdateBookViewModel>().ReverseMap();
+        CreateMap<Book, IndexBookViewModel>()
+            .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author.FullName))
+            .ForMember(dest => dest.Publisher, opt => opt.MapFrom(src => src.Publisher.Name))
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
+            .ReverseMap();
     }
 }

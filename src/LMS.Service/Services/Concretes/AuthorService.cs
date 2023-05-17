@@ -57,11 +57,20 @@ public class AuthorService : IAuthorService
         author.DeletedId = await _userService.GetCurrentUserId();
         author.DeleteDateTime = DateTime.UtcNow;
         author.IsDeleted = true;
+        
+        var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.AuthorId == author.Id);
+        foreach (var book in books)
+        {
+            book.DeletedId = await _userService.GetCurrentUserId();
+            book.DeleteDateTime = DateTime.UtcNow;
+            book.IsDeleted = true;
+        }
+        
         await _unitOfWork.SaveAsync();
         return true;
     }
 
-    public async Task<IEnumerable<IndexAuthorViewModel>> GetAllAuthorsAsync()
+    public async Task<IEnumerable<IndexAuthorViewModel>> GetAllAuthorsNonDeletedAsync()
     {
         var authors = await _unitOfWork.GetRepository<Author>().GetAllAsync(p => !p.IsDeleted, i => i.Books);
         var mapped = _mapper.Map<List<IndexAuthorViewModel>>(authors);
@@ -73,5 +82,11 @@ public class AuthorService : IAuthorService
         var author = await _unitOfWork.GetRepository<Author>().GetAsync(p => p.Id == id);
         var mapped = _mapper.Map<UpdateAuthorViewModel>(author);
         return mapped;
+    }
+
+    public async Task<Dictionary<string, string>> GetAuthorsWithKeyAndNameAsync()
+    {
+        var authors = await _unitOfWork.GetRepository<Author>().GetAllAsync();
+        return authors.ToDictionary(k => k.Id, v => v.FullName);
     }
 }

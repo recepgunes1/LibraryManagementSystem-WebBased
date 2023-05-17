@@ -1,0 +1,65 @@
+@model CreateUserViewModel
+
+@{
+    ViewData["Title"] = "Create a New User";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3 my-3 border-bottom">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <form asp-area="Admin" asp-controller="User" asp-action="Create" method="post">
+
+            <div class="row mb-3">
+                <label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="FirstName"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="LastName"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="Email"/>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label asp-for="UserName" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="UserName"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label asp-for="Password" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" asp-for="Password"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label asp-for="RoleId" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="RoleId" asp-items="@(new SelectList(Model.Roles, "Key", "Value"))" class="form-select">
+                        <option value="">Please select</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary w-50">Create</button>
+                </div>
+            </div>
+        </form>
+        <partial name="~/Areas/PartialViews/_DismissibleErrorSummary.cshtml"/>
+    </div>
+</div>

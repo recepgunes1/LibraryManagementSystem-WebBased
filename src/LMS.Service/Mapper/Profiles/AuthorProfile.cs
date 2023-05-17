@@ -10,7 +10,7 @@ public class AuthorProfile : Profile
     {
         CreateMap<Author, CreateAuthorViewModel>().ReverseMap();
         CreateMap<Author, IndexAuthorViewModel>()
-            .ForMember(dest => dest.AmountOfBooks, opt => opt.MapFrom(src => src.Books.Count))
+            .ForMember(dest => dest.AmountOfBooks, opt => opt.MapFrom(src => src.Books.Count(p => !p.IsDeleted)))
             .ReverseMap();
         CreateMap<Author, UpdateAuthorViewModel>().ReverseMap();
     }

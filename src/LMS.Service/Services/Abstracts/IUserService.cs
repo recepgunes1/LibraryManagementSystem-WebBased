@@ -13,4 +13,9 @@ public interface IUserService
     Task<SignInResult> LoginAsync(LoginViewModel viewModel);
     Task<IdentityResult> RegisterAsync(RegisterViewModel viewModel);
     Task LogoutAsync();
+    Task<IEnumerable<IndexUserViewModel>> GetAllUsersAsync();
+    Task<Dictionary<string, string>> GetRolesWithIdAndNamesAsync();
+    Task<IdentityResult> CreateNewUserAsync(CreateUserViewModel viewModel);
+    Task<UpdateUserViewModel?> GetUserByIdWithUpdateViewModelAsync(string id);
+    Task<IdentityResult> UpdateUserAsync(UpdateUserViewModel viewModel);
 }
