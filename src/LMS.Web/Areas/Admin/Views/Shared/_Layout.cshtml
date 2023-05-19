@@ -17,22 +17,25 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Author" asp-action="Index">Author</a>
+                        <a class="nav-link text-dark" is-active-route asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Book" asp-action="Index">Book</a>
+                        <a class="nav-link text-dark" is-active-route asp-area="Admin" asp-controller="Author" asp-action="Index">Author</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Borrow" asp-action="Index">Borrow</a>
+                        <a class="nav-link text-dark" is-active-route asp-area="Admin" asp-controller="Book" asp-action="Index">Book</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                        <a class="nav-link text-dark" is-active-route asp-area="Admin" asp-controller="Borrow" asp-action="Index">Borrow</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Publisher" asp-action="Index">Publisher</a>
+                        <a class="nav-link text-dark" is-active-route asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">User</a>
+                        <a class="nav-link text-dark" is-active-route asp-area="Admin" asp-controller="Publisher" asp-action="Index">Publisher</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" is-active-route asp-area="Admin" asp-controller="User" asp-action="Index">User</a>
                     </li>
                 </ul>
                 <partial name="~/Areas/PartialViews/_UserOperations.cshtml"/>

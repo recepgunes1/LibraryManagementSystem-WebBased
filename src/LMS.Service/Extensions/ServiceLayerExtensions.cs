@@ -46,6 +46,7 @@ public static class ServiceLayerExtensions
         service.AddScoped<ICategoryService, CategoryService>();
         service.AddScoped<IPublisherService, PublisherService>();
         service.AddScoped<IBookService, BookService>();
+        service.AddScoped<IBorrowService, BorrowService>();
         service.AddAutoMapper(Assembly.GetExecutingAssembly());
         return service;
     }
