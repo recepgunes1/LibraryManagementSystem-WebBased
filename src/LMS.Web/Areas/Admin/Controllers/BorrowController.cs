@@ -1,9 +1,11 @@
 using LMS.Service.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "admin")]
 public class BorrowController : Controller
 {
     private readonly IBorrowService _borrowService;

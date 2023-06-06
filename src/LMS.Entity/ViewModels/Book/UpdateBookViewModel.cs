@@ -12,9 +12,8 @@ public class UpdateBookViewModel
     public string AuthorId { get; set; } = null!;
     public string CategoryId { get; set; } = null!;
     public string PublisherId { get; set; } = null!;
-    
+
     public Dictionary<string, string>? Authors { get; set; }
     public Dictionary<string, string>? Categories { get; set; }
     public Dictionary<string, string>? Publishers { get; set; }
-
 }

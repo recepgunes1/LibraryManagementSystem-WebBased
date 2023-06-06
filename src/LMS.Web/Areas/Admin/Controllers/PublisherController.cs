@@ -1,10 +1,13 @@
 using LMS.Entity.ViewModels.Publisher;
 using LMS.Service.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
 namespace LMS.Web.Areas.Admin.Controllers;
+
 [Area("Admin")]
+[Authorize(Roles = "admin")]
 public class PublisherController : Controller
 {
     private readonly IToastNotification _toastNotification;
@@ -38,22 +41,24 @@ public class PublisherController : Controller
                     $"Publisher was created successfully. Name:{viewModel.Name}");
                 return RedirectToAction(nameof(Index));
             }
+
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
             return View();
         }
+
         _toastNotification.AddErrorToastMessage("Something went wrong");
         return View();
     }
 
     public async Task<IActionResult> Update(string id)
     {
-
         var publisher = await _publisherService.GetPublisherByIdWithUpdateViewModelAsync(id);
         if (publisher == null)
         {
             _toastNotification.AddErrorToastMessage($"Publisher doesn't exist. Id: {id}");
             return RedirectToAction(nameof(Index));
         }
+
         return View(publisher);
     }
 

@@ -1,11 +1,13 @@
 using LMS.Entity.ViewModels.Book;
 using LMS.Service.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
 namespace LMS.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "admin")]
 public class BookController : Controller
 {
     private readonly IAuthorService _authorService;
@@ -49,7 +51,7 @@ public class BookController : Controller
         };
         return View(viewModel);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateBookViewModel viewModel)
     {

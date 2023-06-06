@@ -8,12 +8,12 @@ namespace LMS.Data.Context;
 
 public sealed class AppDbContext : IdentityDbContext<User, Role, string>
 {
-    public AppDbContext()
-    {
-    }
-
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
+        Console.WriteLine("==============================================================================");
+        Console.WriteLine($"Name:{Thread.CurrentThread.Name}-----Id:{Thread.CurrentThread.ManagedThreadId}");
+        Console.WriteLine("==============================================================================");
+
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -21,12 +21,5 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, string>
         base.OnModelCreating(builder);
         builder.RegisterAllEntities<EntityBase>();
         builder.LoadMappings();
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseSqlServer(
-            "Server=172.19.0.2,1433;Database=Library;User Id=SA;Password=Recep123.;TrustServerCertificate=True;MultipleActiveResultSets=True;");
     }
 }

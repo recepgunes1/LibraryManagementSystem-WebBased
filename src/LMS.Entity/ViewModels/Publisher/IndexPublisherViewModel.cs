@@ -6,5 +6,4 @@ public class IndexPublisherViewModel
     public string Name { get; set; } = null!;
     public string? BackStory { get; set; }
     public int AmountOfBooks { get; set; }
-
 }

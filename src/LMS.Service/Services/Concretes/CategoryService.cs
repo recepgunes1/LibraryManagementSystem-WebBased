@@ -57,7 +57,7 @@ public class CategoryService : ICategoryService
         category.DeletedId = await _userService.GetCurrentUserId();
         category.DeleteDateTime = DateTime.UtcNow;
         category.IsDeleted = true;
-        
+
         var children = await _unitOfWork.GetRepository<Category>().GetAllAsync(p => p.ParentCategoryId == category.Id);
         foreach (var child in children)
         {
@@ -106,7 +106,7 @@ public class CategoryService : ICategoryService
             .GetAllAsync(p => !p.IsDeleted && p.ParentCategoryId == null && p.Name != name);
         return categories.ToDictionary(p => p.Id, p => p.Name);
     }
-    
+
     public async Task<Dictionary<string, string>> GetCategoriesWithKeyAndNameAsync()
     {
         var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync();
@@ -115,5 +115,4 @@ public class CategoryService : ICategoryService
         //     .Where(c => !context.Categories.Any(p => p.ParentCategoryId == c.Id))
         //     .ToList();
     }
-
 }

@@ -15,50 +15,103 @@ public class AuthController : Controller
         _userService = userService;
     }
 
-    [AllowAnonymous]
     public IActionResult Login()
     {
+        if (IsUserAuthenticated())
+        {
+            return RedirectToAction(nameof(AccessDenied));
+        }
+
         return View();
     }
 
-    [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel viewModel)
     {
+        if (IsUserAuthenticated())
+        {
+            return RedirectToAction(nameof(AccessDenied));
+        }
+
         if (!ModelState.IsValid)
         {
-            ModelState.AddModelError(string.Empty, "(1) Your credentials aren't confirmed.");
-            return View();
+            ModelState.AddModelError(string.Empty,
+                "The submitted form is not valid. Please correct the errors and try again.");
+            return View(viewModel);
         }
 
         var result = await _userService.LoginAsync(viewModel);
         if (!result.Succeeded)
         {
-            ModelState.AddModelError(string.Empty, "(2) Your credentials aren't confirmed.");
-            return View();
-        }
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Your account has been locked out due to multiple unsuccessful login attempts. Please try again later or contact support.");
+            }
+            else if (result.IsNotAllowed)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Your account has not been confirmed. Please confirm your account or contact support.");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
 
+            return View(viewModel);
+        }
+        
+        string? returnUrl = HttpContext.Request.Query["returnUrl"];
+        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            return Redirect(returnUrl);
+        
+        Console.Write(User.Identity.IsAuthenticated);
+        
         return RedirectToAction("Index", "Home", new { area = "Admin" });
     }
 
     public IActionResult ResetPassword()
     {
+        if (IsUserAuthenticated())
+        {
+            return RedirectToAction(nameof(AccessDenied));
+        }
+
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult ResetPassword(ResetPasswordViewModel viewModel)
+    {
+        if (IsUserAuthenticated())
+        {
+            return RedirectToAction(nameof(AccessDenied));
+        }
 
-    [AllowAnonymous]
+        return View(viewModel);
+    }
+
     public IActionResult Register()
     {
+        if (IsUserAuthenticated())
+        {
+            return RedirectToAction(nameof(AccessDenied));
+        }
+
         return View();
     }
 
-    [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegisterViewModel viewModel)
     {
+        if (IsUserAuthenticated())
+        {
+            return RedirectToAction(nameof(AccessDenied));
+        }
+
         if (!ModelState.IsValid)
         {
             ModelState.AddModelError(string.Empty, "Your credentials aren't confirmed.");
@@ -91,6 +144,12 @@ public class AuthController : Controller
 
     public IActionResult AccessDenied()
     {
-        return BadRequest();
+        return View();
+    }
+
+    private bool IsUserAuthenticated()
+    {
+        var identity = User.Identity;
+        return identity is { IsAuthenticated: true };
     }
 }

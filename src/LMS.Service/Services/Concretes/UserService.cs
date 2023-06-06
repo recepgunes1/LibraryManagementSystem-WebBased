@@ -66,6 +66,13 @@ public class UserService : IUserService
         return user.Id;
     }
 
+    public async Task<string> GetCurrentUserRole()
+    {
+        var user = await GetCurrentUserAsync();
+        var roles = await _userManager.GetRolesAsync(user);
+        return string.Join("", roles);
+    }
+
     public async Task<IdentityResult> ChangeUserPasswordAsync(ChangePasswordViewModel viewModel)
     {
         var user = await GetCurrentUserAsync();

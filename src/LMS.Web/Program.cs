@@ -1,4 +1,4 @@
-//using LMS.Web.Middlewares;
+using LMS.Web.Middlewares;
 using LMS.Data.Extensions;
 using LMS.Service.Extensions;
 using NToastNotify;
@@ -17,7 +17,7 @@ builder.Services.LoadDataLayer(builder.Configuration);
 builder.Services.LoadServiceLayer();
 
 var app = builder.Build();
-
+app.MigrateDatabase();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -29,6 +29,6 @@ app.MapControllerRoute(
     "areas",
     "{area:exists}/{controller}/{action}/{id?}");
 
-//app.UseInitialRequest();
+app.UseInitialRequest();
 app.UseNToastNotify();
 app.Run();

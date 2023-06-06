@@ -57,7 +57,7 @@ public class AuthorService : IAuthorService
         author.DeletedId = await _userService.GetCurrentUserId();
         author.DeleteDateTime = DateTime.UtcNow;
         author.IsDeleted = true;
-        
+
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.AuthorId == author.Id);
         foreach (var book in books)
         {
@@ -65,7 +65,7 @@ public class AuthorService : IAuthorService
             book.DeleteDateTime = DateTime.UtcNow;
             book.IsDeleted = true;
         }
-        
+
         await _unitOfWork.SaveAsync();
         return true;
     }

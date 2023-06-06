@@ -7,7 +7,7 @@ using NToastNotify;
 namespace LMS.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize]
+[Authorize(Roles = "admin")]
 public class AuthorController : Controller
 {
     private readonly IAuthorService _authorService;

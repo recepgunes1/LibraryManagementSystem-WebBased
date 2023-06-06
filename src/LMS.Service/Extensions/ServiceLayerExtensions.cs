@@ -4,6 +4,7 @@ using LMS.Entity.Entities;
 using LMS.Service.Services.Abstracts;
 using LMS.Service.Services.Concretes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LMS.Service.Extensions;
@@ -24,7 +25,8 @@ public static class ServiceLayerExtensions
                 opt.SignIn.RequireConfirmedPhoneNumber = false;
                 opt.SignIn.RequireConfirmedEmail = false;
             })
-            .AddEntityFrameworkStores<AppDbContext>();
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
         service.ConfigureApplicationCookie(opt =>
         {
@@ -36,6 +38,14 @@ public static class ServiceLayerExtensions
             opt.LoginPath = new PathString("/Account/Auth/Login");
             opt.LogoutPath = new PathString("/Account/Auth/Logout");
             opt.AccessDeniedPath = new PathString("/Account/Auth/AccessDenied");
+            opt.Events = new()
+            {
+                OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.Redirect(opt.AccessDeniedPath);
+                    return Task.CompletedTask;
+                }
+            };
             opt.Cookie = cookieBuilder;
             opt.ExpireTimeSpan = TimeSpan.FromDays(16);
             opt.SlidingExpiration = true;

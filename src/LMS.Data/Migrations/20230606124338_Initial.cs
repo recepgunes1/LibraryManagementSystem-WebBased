@@ -308,10 +308,31 @@ namespace LMS.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "253dcac2-9df6-4134-92fb-bc635b300f41", "d868d96f-bffc-4ffc-b572-98fad4937a72", "lecturer", "LECTURER" },
-                    { "b3b0b54f-fed7-45d4-a683-95a77e3b6fff", "981e05b2-bb62-4884-9cf5-f65e49aaeaea", "student", "STUDENT" },
-                    { "fb514fc1-a30c-4490-847b-bf02c2422778", "03869643-c3f5-42f7-9e5e-446ffa01e891", "admin", "ADMIN" }
+                    { "170a7be7-9aa8-40ea-8443-2341f74008a4", "fa5a7994-f6c7-40c9-98a9-32d0278a7d5d", "admin", "ADMIN" },
+                    { "798c16cb-cbcb-43c9-ac62-64d06a587e66", "1e50849f-5a01-4f5d-9bb1-03b9256a99b3", "student", "STUDENT" },
+                    { "806410f4-0d26-4fba-b392-e7d7cfb9c429", "c7ee9cce-3d57-4c4f-8107-cc85e8631b6c", "lecturer", "LECTURER" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "SecurityStamp", "UserName" },
+                values: new object[] { "b058aa70-e170-46e6-8d93-3cb7e32c6656", 0, "d1de201d-7fff-4ebe-8185-86f78d41ff27", "admin@admin.com", "admin", "admin", false, null, "ADMIN@ADMIN.COM", "111111111", "AQAAAAIAAYagAAAAEHIIF5h1kBbyXc1IilCeqRXpzfy6rHIcBJ47A1Vt8JX+fHTS/8mvogwd/MlxAFLq6A==", "81a2219a-af05-4c34-9012-ac7bd82dce02", "111111111" });
+
+            migrationBuilder.InsertData(
+                table: "RoleClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
+                values: new object[,]
+                {
+                    { 1, "MaxBooks", "5", "798c16cb-cbcb-43c9-ac62-64d06a587e66" },
+                    { 2, "MaxDays", "20", "798c16cb-cbcb-43c9-ac62-64d06a587e66" },
+                    { 3, "MaxBooks", "4", "806410f4-0d26-4fba-b392-e7d7cfb9c429" },
+                    { 4, "MaxDays", "12", "806410f4-0d26-4fba-b392-e7d7cfb9c429" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "170a7be7-9aa8-40ea-8443-2341f74008a4", "b058aa70-e170-46e6-8d93-3cb7e32c6656" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Author_FullName",

@@ -57,7 +57,7 @@ public class PublisherService : IPublisherService
         publisher.DeletedId = await _userService.GetCurrentUserId();
         publisher.DeleteDateTime = DateTime.UtcNow;
         publisher.IsDeleted = true;
-        
+
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.PublisherId == publisher.Id);
         foreach (var book in books)
         {
@@ -65,7 +65,7 @@ public class PublisherService : IPublisherService
             book.DeleteDateTime = DateTime.UtcNow;
             book.IsDeleted = true;
         }
-        
+
         await _unitOfWork.SaveAsync();
         return true;
     }
@@ -83,11 +83,10 @@ public class PublisherService : IPublisherService
         var mapped = _mapper.Map<UpdatePublisherViewModel>(publisher);
         return mapped;
     }
-    
+
     public async Task<Dictionary<string, string>> GetPublishersWithKeyAndNameAsync()
     {
         var publishers = await _unitOfWork.GetRepository<Publisher>().GetAllAsync();
         return publishers.ToDictionary(k => k.Id, v => v.Name);
     }
-
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.Web.Areas.Account.Controllers;
 
 [Area("Account")]
-[Authorize]
+[Authorize(Roles = "student, lecturer, admin")]
 public class UserController : Controller
 {
     private readonly IUserService _userService;

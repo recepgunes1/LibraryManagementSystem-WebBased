@@ -306,24 +306,24 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b3b0b54f-fed7-45d4-a683-95a77e3b6fff",
-                            ConcurrencyStamp = "981e05b2-bb62-4884-9cf5-f65e49aaeaea",
-                            Name = "student",
-                            NormalizedName = "STUDENT"
+                            Id = "170a7be7-9aa8-40ea-8443-2341f74008a4",
+                            ConcurrencyStamp = "fa5a7994-f6c7-40c9-98a9-32d0278a7d5d",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "253dcac2-9df6-4134-92fb-bc635b300f41",
-                            ConcurrencyStamp = "d868d96f-bffc-4ffc-b572-98fad4937a72",
+                            Id = "806410f4-0d26-4fba-b392-e7d7cfb9c429",
+                            ConcurrencyStamp = "c7ee9cce-3d57-4c4f-8107-cc85e8631b6c",
                             Name = "lecturer",
                             NormalizedName = "LECTURER"
                         },
                         new
                         {
-                            Id = "fb514fc1-a30c-4490-847b-bf02c2422778",
-                            ConcurrencyStamp = "03869643-c3f5-42f7-9e5e-446ffa01e891",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
+                            Id = "798c16cb-cbcb-43c9-ac62-64d06a587e66",
+                            ConcurrencyStamp = "1e50849f-5a01-4f5d-9bb1-03b9256a99b3",
+                            Name = "student",
+                            NormalizedName = "STUDENT"
                         });
                 });
 
@@ -386,6 +386,23 @@ namespace LMS.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b058aa70-e170-46e6-8d93-3cb7e32c6656",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d1de201d-7fff-4ebe-8185-86f78d41ff27",
+                            Email = "admin@admin.com",
+                            FirstName = "admin",
+                            LastName = "admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "111111111",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHIIF5h1kBbyXc1IilCeqRXpzfy6rHIcBJ47A1Vt8JX+fHTS/8mvogwd/MlxAFLq6A==",
+                            SecurityStamp = "81a2219a-af05-4c34-9012-ac7bd82dce02",
+                            UserName = "111111111"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -411,6 +428,36 @@ namespace LMS.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "MaxBooks",
+                            ClaimValue = "5",
+                            RoleId = "798c16cb-cbcb-43c9-ac62-64d06a587e66"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "MaxDays",
+                            ClaimValue = "20",
+                            RoleId = "798c16cb-cbcb-43c9-ac62-64d06a587e66"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "MaxBooks",
+                            ClaimValue = "4",
+                            RoleId = "806410f4-0d26-4fba-b392-e7d7cfb9c429"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "MaxDays",
+                            ClaimValue = "12",
+                            RoleId = "806410f4-0d26-4fba-b392-e7d7cfb9c429"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -473,6 +520,13 @@ namespace LMS.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b058aa70-e170-46e6-8d93-3cb7e32c6656",
+                            RoleId = "170a7be7-9aa8-40ea-8443-2341f74008a4"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

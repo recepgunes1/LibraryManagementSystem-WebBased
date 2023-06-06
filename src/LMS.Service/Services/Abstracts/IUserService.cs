@@ -7,6 +7,7 @@ public interface IUserService
 {
     Task<string> GetCurrentUserFullNameAsync();
     Task<string> GetCurrentUserId();
+    Task<string> GetCurrentUserRole();
     Task<IdentityResult> ChangeUserPasswordAsync(ChangePasswordViewModel viewModel);
     Task<IdentityResult> UpdateUserProfileInformationAsync(EditUserProfileViewModel viewModel);
     Task<EditUserProfileViewModel> GetCurrentUserProfileInformationAsync();

@@ -1,3 +1,4 @@
+#nullable disable
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -7,15 +8,11 @@ namespace LMS.Web.TagHelpers;
 [HtmlTargetElement(Attributes = "is-active-route")]
 public class ActiveRouteTagHelper : TagHelper
 {
-    [HtmlAttributeName("asp-controller")]
-    public string Controller { get; set; }
+    [HtmlAttributeName("asp-controller")] public string Controller { get; set; }
 
-    [HtmlAttributeName("asp-action")]
-    public string Action { get; set; }
+    [HtmlAttributeName("asp-action")] public string Action { get; set; }
 
-    [ViewContext]
-    [HtmlAttributeNotBound]
-    public ViewContext ViewContext { get; set; }
+    [ViewContext] [HtmlAttributeNotBound] public ViewContext ViewContext { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -34,9 +31,11 @@ public class ActiveRouteTagHelper : TagHelper
             }
             else
             {
-                output.Attributes.SetAttribute("class", classAttr.Value == null ? "text-decoration-underline" : classAttr.Value.ToString() + " text-decoration-underline");
+                output.Attributes.SetAttribute("class",
+                    classAttr.Value == null
+                        ? "text-decoration-underline"
+                        : classAttr.Value + " text-decoration-underline");
             }
         }
     }
-
 }

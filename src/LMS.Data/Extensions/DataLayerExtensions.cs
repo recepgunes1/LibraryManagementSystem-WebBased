@@ -1,6 +1,7 @@
 using LMS.Data.Context;
 using LMS.Data.Repository;
 using LMS.Data.UnitOfWorks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,5 +16,14 @@ public static class DataLayerExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddDbContext<AppDbContext>(p => p.UseSqlServer(configuration.GetConnectionString("default")));
         return services;
+    }
+
+    public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder builder)
+    {
+        var factory = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+        using var serviceScope = factory.CreateScope();
+        var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        context.Database.Migrate();
+        return builder;
     }
 }

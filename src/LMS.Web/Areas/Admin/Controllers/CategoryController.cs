@@ -1,11 +1,13 @@
 using LMS.Entity.ViewModels.Category;
 using LMS.Service.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
 namespace LMS.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "admin")]
 public class CategoryController : Controller
 {
     private readonly ICategoryService _categoryService;
@@ -43,9 +45,11 @@ public class CategoryController : Controller
                     $"Category was created successfully. FullName:{viewModel.Name}");
                 return RedirectToAction(nameof(Index));
             }
+
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
             return View();
         }
+
         _toastNotification.AddErrorToastMessage("Something went wrong");
         return View();
     }
@@ -58,7 +62,7 @@ public class CategoryController : Controller
             _toastNotification.AddErrorToastMessage($"Category doesn't exist. Id: {id}");
             return RedirectToAction(nameof(Index));
         }
-        
+
         category.Parents = await _categoryService.GetParentCategoriesAsync(category.Name);
         return View(category);
     }

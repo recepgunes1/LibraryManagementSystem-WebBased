@@ -1,11 +1,13 @@
 using LMS.Entity.ViewModels.User;
 using LMS.Service.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
 namespace LMS.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "admin")]
 public class UserController : Controller
 {
     private readonly IUserService _userService;
@@ -85,7 +87,7 @@ public class UserController : Controller
         }
 
         if (!_toastNotification.GetToastMessages().Any())
-        { 
+        {
             _toastNotification.AddErrorToastMessage("Something went wrong.");
         }
 
