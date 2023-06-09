@@ -95,7 +95,6 @@ public class UserService : IUserService
         var user = _mapper.Map<User>(viewModel);
         var result = await _userManager.CreateAsync(user, viewModel.Password);
         if (result.Succeeded) await _userManager.AddToRoleAsync(user, "student");
-
         return result;
     }
 

@@ -14,16 +14,10 @@ public static class DataLayerExtensions
     {
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddDbContext<AppDbContext>(p => p.UseSqlServer(configuration.GetConnectionString("default")));
+        services.AddDbContext<AppDbContext>(p =>
+            p.UseSqlServer(configuration.GetConnectionString("default"))
+                .EnableDetailedErrors()
+                .EnableSensitiveDataLogging());
         return services;
-    }
-
-    public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder builder)
-    {
-        var factory = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
-        using var serviceScope = factory.CreateScope();
-        var context = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-        context.Database.Migrate();
-        return builder;
     }
 }

@@ -4,7 +4,7 @@ using LMS.Service.Extensions;
 using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews()
     .AddNToastNotifyToastr(new ToastrOptions
     {
@@ -17,7 +17,6 @@ builder.Services.LoadDataLayer(builder.Configuration);
 builder.Services.LoadServiceLayer();
 
 var app = builder.Build();
-app.MigrateDatabase();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

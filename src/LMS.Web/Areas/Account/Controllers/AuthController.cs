@@ -66,8 +66,6 @@ public class AuthController : Controller
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             return Redirect(returnUrl);
         
-        Console.Write(User.Identity.IsAuthenticated);
-        
         return RedirectToAction("Index", "Home", new { area = "Admin" });
     }
 

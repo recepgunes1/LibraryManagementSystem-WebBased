@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using LMS.Service.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -6,22 +7,27 @@ namespace LMS.Web.TagHelpers;
 
 public class GetHomePageTagHelper : TagHelper
 {
-    private readonly IUserService _userService;
+    private readonly HttpContext _httpContext;
 
     public string Text { get; set; }
 
 
-    public GetHomePageTagHelper(IUserService userService, IHostEnvironment hostEnvironment)
+    public GetHomePageTagHelper(IHttpContextAccessor httpContextAccessor, IHostEnvironment hostEnvironment)
     {
-        _userService = userService;
+        _httpContext = httpContextAccessor.HttpContext!;
         Text = hostEnvironment.ApplicationName;
     }
 
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         output.TagName = "a";
+        
+        if (_httpContext.User.Identity is not ClaimsIdentity claimsIdentity) return Task.CompletedTask;
 
-        var role = _userService.GetCurrentUserRole().GetAwaiter().GetResult();
+        var role = string.Join("", claimsIdentity.Claims
+            .Where(c => c.Type == ClaimTypes.Role)
+            .Select(c => c.Value));
+
 
         if (role == "lecturer" || role == "student")
         {

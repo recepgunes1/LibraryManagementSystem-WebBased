@@ -10,12 +10,8 @@ public sealed class AppDbContext : IdentityDbContext<User, Role, string>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
-        Console.WriteLine("==============================================================================");
-        Console.WriteLine($"Name:{Thread.CurrentThread.Name}-----Id:{Thread.CurrentThread.ManagedThreadId}");
-        Console.WriteLine("==============================================================================");
-
-    }
-
+    } 
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
