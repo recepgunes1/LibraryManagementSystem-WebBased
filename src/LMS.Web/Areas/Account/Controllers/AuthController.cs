@@ -17,10 +17,7 @@ public class AuthController : Controller
 
     public IActionResult Login()
     {
-        if (IsUserAuthenticated())
-        {
-            return RedirectToAction(nameof(AccessDenied));
-        }
+        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
 
         return View();
     }
@@ -29,10 +26,7 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel viewModel)
     {
-        if (IsUserAuthenticated())
-        {
-            return RedirectToAction(nameof(AccessDenied));
-        }
+        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
 
         if (!ModelState.IsValid)
         {
@@ -45,36 +39,27 @@ public class AuthController : Controller
         if (!result.Succeeded)
         {
             if (result.IsLockedOut)
-            {
                 ModelState.AddModelError(string.Empty,
                     "Your account has been locked out due to multiple unsuccessful login attempts. Please try again later or contact support.");
-            }
             else if (result.IsNotAllowed)
-            {
                 ModelState.AddModelError(string.Empty,
                     "Your account has not been confirmed. Please confirm your account or contact support.");
-            }
             else
-            {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            }
 
             return View(viewModel);
         }
-        
+
         string? returnUrl = HttpContext.Request.Query["returnUrl"];
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             return Redirect(returnUrl);
-        
+
         return RedirectToAction("Index", "Home", new { area = "Admin" });
     }
 
     public IActionResult ResetPassword()
     {
-        if (IsUserAuthenticated())
-        {
-            return RedirectToAction(nameof(AccessDenied));
-        }
+        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
 
         return View();
     }
@@ -83,20 +68,14 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult ResetPassword(ResetPasswordViewModel viewModel)
     {
-        if (IsUserAuthenticated())
-        {
-            return RedirectToAction(nameof(AccessDenied));
-        }
+        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
 
         return View(viewModel);
     }
 
     public IActionResult Register()
     {
-        if (IsUserAuthenticated())
-        {
-            return RedirectToAction(nameof(AccessDenied));
-        }
+        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
 
         return View();
     }
@@ -105,10 +84,7 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegisterViewModel viewModel)
     {
-        if (IsUserAuthenticated())
-        {
-            return RedirectToAction(nameof(AccessDenied));
-        }
+        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
 
         if (!ModelState.IsValid)
         {

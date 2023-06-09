@@ -45,7 +45,7 @@ public static class ModelBuilderExtensions
             NormalizedName = "ADMIN"
         };
 
-        var userAdmin = new User()
+        var userAdmin = new User
         {
             Id = Guid.NewGuid().ToString(),
             FirstName = "admin",
@@ -53,7 +53,7 @@ public static class ModelBuilderExtensions
             UserName = "111111111",
             NormalizedUserName = "111111111",
             Email = "admin@admin.com",
-            NormalizedEmail = "ADMIN@ADMIN.COM",
+            NormalizedEmail = "ADMIN@ADMIN.COM"
         };
         var ph = new PasswordHasher<User>();
         userAdmin.PasswordHash = ph.HashPassword(userAdmin, "Admin123.");
@@ -70,10 +70,10 @@ public static class ModelBuilderExtensions
 
         builder.Entity<Role>().HasData(roleAdmin, roleLecturer, roleStudent);
         builder.Entity<User>().HasData(userAdmin);
-        builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>()
+        builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
         {
             RoleId = roleAdmin.Id,
-            UserId = userAdmin.Id,
+            UserId = userAdmin.Id
         });
         builder.Entity<IdentityRoleClaim<string>>().HasData(new IdentityRoleClaim<string>
         {

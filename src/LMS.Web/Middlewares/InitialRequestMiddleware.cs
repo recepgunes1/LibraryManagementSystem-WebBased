@@ -36,14 +36,12 @@ public class InitialRequestMiddleware
         };
 
         if (!context.User.Identity.IsAuthenticated)
-        {
             if (!authenticationPaths.Contains(context.Request.Path.Value!))
             {
                 Console.WriteLine("worked here in if authenticationPaths.Contains");
                 context.Response.Redirect("/Account/Auth/Login");
                 return Task.CompletedTask;
             }
-        }
 
         if (context.User.Identity is not ClaimsIdentity claimsIdentity) return Task.CompletedTask;
 

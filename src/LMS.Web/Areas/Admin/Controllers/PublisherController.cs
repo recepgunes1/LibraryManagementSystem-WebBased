@@ -10,8 +10,8 @@ namespace LMS.Web.Areas.Admin.Controllers;
 [Authorize(Roles = "admin")]
 public class PublisherController : Controller
 {
-    private readonly IToastNotification _toastNotification;
     private readonly IPublisherService _publisherService;
+    private readonly IToastNotification _toastNotification;
 
     public PublisherController(IToastNotification toastNotification, IPublisherService publisherService)
     {

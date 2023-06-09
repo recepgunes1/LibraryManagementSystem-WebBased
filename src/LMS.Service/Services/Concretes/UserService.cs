@@ -12,9 +12,9 @@ public class UserService : IUserService
 {
     private readonly HttpContext _httpContext;
     private readonly IMapper _mapper;
+    private readonly RoleManager<Role> _roleManager;
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<Role> _roleManager;
 
     public UserService(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager,
         IHttpContextAccessor httpContextAccessor, RoleManager<Role> roleManager)
@@ -103,17 +103,6 @@ public class UserService : IUserService
         await _signInManager.SignOutAsync();
     }
 
-    private async Task<User> GetCurrentUserAsync()
-    {
-        var user = await _userManager.FindByNameAsync(_httpContext.User.Identity!.Name!);
-        if (user != null)
-        {
-            return user;
-        }
-
-        return new();
-    }
-
     // public async Task<IEnumerable<IndexUserViewModel>> GetAllUsersAsync()
     // {
     //     var users = await _userManager.Users.ToListAsync();
@@ -149,19 +138,15 @@ public class UserService : IUserService
         {
             var userRoles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
-            {
                 if (userRoles.Contains(role.Name!))
-                {
                     mappedUsers.Add(new IndexUserViewModel
                     {
                         Id = user.Id,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
                         Email = user.Email!,
-                        Role = role.Name!,
+                        Role = role.Name!
                     });
-                }
-            }
         }
 
         return mappedUsers;
@@ -209,5 +194,13 @@ public class UserService : IUserService
         await _userManager.RemoveFromRoleAsync(user, oldRole);
         await _userManager.AddToRoleAsync(user, newRole);
         return result;
+    }
+
+    private async Task<User> GetCurrentUserAsync()
+    {
+        var user = await _userManager.FindByNameAsync(_httpContext.User.Identity!.Name!);
+        if (user != null) return user;
+
+        return new User();
     }
 }

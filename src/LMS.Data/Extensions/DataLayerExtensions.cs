@@ -1,7 +1,6 @@
 using LMS.Data.Context;
 using LMS.Data.Repository;
 using LMS.Data.UnitOfWorks;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

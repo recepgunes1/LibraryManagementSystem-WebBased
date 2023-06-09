@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using LMS.Service.Services.Abstracts;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace LMS.Web.TagHelpers;
@@ -22,12 +21,9 @@ public class GetFullNameTagHelper : TagHelper
         var name = string.Join("", claimsIdentity.Claims
             .Where(c => c.Type == ClaimTypes.Name)
             .Select(c => c.Value));
-        
-        foreach (var item in claimsIdentity.Claims)
-        {
-            Console.WriteLine($"{item.Type} {item.ValueType} {item.Value}");
-        }
-        
+
+        foreach (var item in claimsIdentity.Claims) Console.WriteLine($"{item.Type} {item.ValueType} {item.Value}");
+
         output.Content.SetHtmlContent(name);
         return base.ProcessAsync(context, output);
     }

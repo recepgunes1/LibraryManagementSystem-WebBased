@@ -1,6 +1,6 @@
-using LMS.Web.Middlewares;
 using LMS.Data.Extensions;
 using LMS.Service.Extensions;
+using LMS.Web.Middlewares;
 using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);

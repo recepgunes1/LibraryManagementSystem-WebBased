@@ -43,11 +43,11 @@ public class BookController : Controller
 
     public async Task<IActionResult> Create()
     {
-        var viewModel = new CreateBookViewModel()
+        var viewModel = new CreateBookViewModel
         {
             Authors = await _authorService.GetAuthorsWithKeyAndNameAsync(),
             Publishers = await _publisherService.GetPublishersWithKeyAndNameAsync(),
-            Categories = await _categoryService.GetCategoriesWithKeyAndNameAsync(),
+            Categories = await _categoryService.GetCategoriesWithKeyAndNameAsync()
         };
         return View(viewModel);
     }

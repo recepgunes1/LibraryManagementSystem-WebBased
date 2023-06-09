@@ -3,6 +3,7 @@ using LMS.Data.Context;
 using LMS.Entity.Entities;
 using LMS.Service.Services.Abstracts;
 using LMS.Service.Services.Concretes;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,7 @@ public static class ServiceLayerExtensions
             opt.LoginPath = new PathString("/Account/Auth/Login");
             opt.LogoutPath = new PathString("/Account/Auth/Logout");
             opt.AccessDeniedPath = new PathString("/Account/Auth/AccessDenied");
-            opt.Events = new()
+            opt.Events = new CookieAuthenticationEvents
             {
                 OnRedirectToAccessDenied = context =>
                 {

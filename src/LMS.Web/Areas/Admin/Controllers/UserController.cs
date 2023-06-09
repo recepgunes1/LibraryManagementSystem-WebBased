@@ -10,8 +10,8 @@ namespace LMS.Web.Areas.Admin.Controllers;
 [Authorize(Roles = "admin")]
 public class UserController : Controller
 {
-    private readonly IUserService _userService;
     private readonly IToastNotification _toastNotification;
+    private readonly IUserService _userService;
 
     public UserController(IUserService userService, IToastNotification toastNotification)
     {
@@ -26,9 +26,9 @@ public class UserController : Controller
 
     public async Task<IActionResult> Create()
     {
-        var viewModel = new CreateUserViewModel()
+        var viewModel = new CreateUserViewModel
         {
-            Roles = await _userService.GetRolesWithIdAndNamesAsync(),
+            Roles = await _userService.GetRolesWithIdAndNamesAsync()
         };
         return View(viewModel);
     }
@@ -87,9 +87,7 @@ public class UserController : Controller
         }
 
         if (!_toastNotification.GetToastMessages().Any())
-        {
             _toastNotification.AddErrorToastMessage("Something went wrong.");
-        }
 
         viewModel.Roles = await _userService.GetRolesWithIdAndNamesAsync();
         return View(viewModel);
@@ -101,7 +99,7 @@ public class UserController : Controller
         return Json(users.Select(p => new
         {
             p.FirstName, p.LastName, p.Email, p.AmountOfBooks, p.Role,
-            UpdateLink = Url.Action("Update", "User", new { Area = "Admin", id = p.Id }),
+            UpdateLink = Url.Action("Update", "User", new { Area = "Admin", id = p.Id })
         }));
     }
 }
