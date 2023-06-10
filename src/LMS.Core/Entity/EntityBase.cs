@@ -7,7 +7,7 @@ public class EntityBase : IEntityBase
     public string? UpdatedId { get; set; }
     public string? DeletedId { get; set; }
 
-    public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
+    public DateTime CreateDateTime { get; set; } = DateTime.Now;
     public DateTime? UpdateDateTime { get; set; }
     public DateTime? DeleteDateTime { get; set; }
 

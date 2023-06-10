@@ -1,6 +1,7 @@
 using LMS.Service.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace LMS.Web.Areas.Admin.Controllers;
 
@@ -9,10 +10,13 @@ namespace LMS.Web.Areas.Admin.Controllers;
 public class BorrowController : Controller
 {
     private readonly IBorrowService _borrowService;
+    private readonly IToastNotification _toastNotification;
 
-    public BorrowController(IBorrowService borrowService)
+
+    public BorrowController(IBorrowService borrowService, IToastNotification toastNotification)
     {
         _borrowService = borrowService;
+        _toastNotification = toastNotification;
     }
 
     public IActionResult Index()
@@ -20,9 +24,11 @@ public class BorrowController : Controller
         return View();
     }
 
-    public IActionResult Approve(string id)
+    public async Task<IActionResult> Approve(string id)
     {
-        return Ok();
+        await _borrowService.ApproveAsync(id);
+        _toastNotification.AddInfoToastMessage($"The book was approved successfully. Operation Id: {id}");
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Get()

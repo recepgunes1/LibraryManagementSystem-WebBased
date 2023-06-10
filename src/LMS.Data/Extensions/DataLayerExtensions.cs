@@ -13,10 +13,7 @@ public static class DataLayerExtensions
     {
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddDbContext<AppDbContext>(p =>
-            p.UseSqlServer(configuration.GetConnectionString("default"))
-                .EnableDetailedErrors()
-                .EnableSensitiveDataLogging());
+        services.AddDbContext<AppDbContext>(p => p.UseSqlServer(configuration.GetConnectionString("default")));
         return services;
     }
 }

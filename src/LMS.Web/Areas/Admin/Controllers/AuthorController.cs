@@ -52,7 +52,6 @@ public class AuthorController : Controller
 
     public async Task<IActionResult> Update(string id)
     {
-        Console.WriteLine(id);
         var author = await _authorService.GetAuthorByIdWithUpdateViewModelAsync(id);
         if (author == null)
         {

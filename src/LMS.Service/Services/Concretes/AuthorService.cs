@@ -42,7 +42,7 @@ public class AuthorService : IAuthorService
         var author = await _unitOfWork.GetRepository<Author>().GetAsync(p => p.Id == viewModel.Id);
         _mapper.Map(viewModel, author);
         author.UpdatedId = await _userService.GetCurrentUserId();
-        author.UpdateDateTime = DateTime.UtcNow;
+        author.UpdateDateTime = DateTime.Now;
         await _unitOfWork.SaveAsync();
         return true;
     }
@@ -55,14 +55,14 @@ public class AuthorService : IAuthorService
 
         var author = await _unitOfWork.GetRepository<Author>().GetAsync(p => p.Id == id);
         author.DeletedId = await _userService.GetCurrentUserId();
-        author.DeleteDateTime = DateTime.UtcNow;
+        author.DeleteDateTime = DateTime.Now;
         author.IsDeleted = true;
 
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.AuthorId == author.Id);
         foreach (var book in books)
         {
             book.DeletedId = await _userService.GetCurrentUserId();
-            book.DeleteDateTime = DateTime.UtcNow;
+            book.DeleteDateTime = DateTime.Now;
             book.IsDeleted = true;
         }
 
@@ -86,7 +86,7 @@ public class AuthorService : IAuthorService
 
     public async Task<Dictionary<string, string>> GetAuthorsWithKeyAndNameAsync()
     {
-        var authors = await _unitOfWork.GetRepository<Author>().GetAllAsync();
+        var authors = await _unitOfWork.GetRepository<Author>().GetAllAsync(p => !p.IsDeleted);
         return authors.ToDictionary(k => k.Id, v => v.FullName);
     }
 }

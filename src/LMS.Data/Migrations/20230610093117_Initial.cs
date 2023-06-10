@@ -14,7 +14,7 @@ namespace LMS.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Author",
+                name: "Authors",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -30,11 +30,11 @@ namespace LMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Author", x => x.Id);
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -51,16 +51,16 @@ namespace LMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Category_Category_ParentCategoryId",
+                        name: "FK_Categories_Categories_ParentCategoryId",
                         column: x => x.ParentCategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Publisher",
+                name: "Publishers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -76,7 +76,7 @@ namespace LMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Publisher", x => x.Id);
+                    table.PrimaryKey("PK_Publishers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -117,7 +117,7 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Book",
+                name: "Books",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -140,23 +140,23 @@ namespace LMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Book", x => x.Id);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Book_Author_AuthorId",
+                        name: "FK_Books_Authors_AuthorId",
                         column: x => x.AuthorId,
-                        principalTable: "Author",
+                        principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Book_Category_CategoryId",
+                        name: "FK_Books_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Book_Publisher_PublisherId",
+                        name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
-                        principalTable: "Publisher",
+                        principalTable: "Publishers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -268,7 +268,7 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Borrow",
+                name: "Borrows",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -288,15 +288,15 @@ namespace LMS.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Borrow", x => x.Id);
+                    table.PrimaryKey("PK_Borrows", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Borrow_Book_BookId",
+                        name: "FK_Borrows_Books_BookId",
                         column: x => x.BookId,
-                        principalTable: "Book",
+                        principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Borrow_Users_UserId",
+                        name: "FK_Borrows_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -308,72 +308,72 @@ namespace LMS.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "170a7be7-9aa8-40ea-8443-2341f74008a4", "fa5a7994-f6c7-40c9-98a9-32d0278a7d5d", "admin", "ADMIN" },
-                    { "798c16cb-cbcb-43c9-ac62-64d06a587e66", "1e50849f-5a01-4f5d-9bb1-03b9256a99b3", "student", "STUDENT" },
-                    { "806410f4-0d26-4fba-b392-e7d7cfb9c429", "c7ee9cce-3d57-4c4f-8107-cc85e8631b6c", "lecturer", "LECTURER" }
+                    { "13a02ff0-629a-4081-acbb-8db62a9dbaf5", "dd34b7c6-0876-4289-a290-4d143968773b", "lecturer", "LECTURER" },
+                    { "96079ce3-c881-4b86-8579-b571f82792c7", "f66bee94-b51d-4bcf-a41e-b717060d6b4a", "student", "STUDENT" },
+                    { "e742e8fa-5a87-40f5-b45a-59c5287289a8", "3aae9143-b2ca-48cf-8b49-25889a01faa8", "admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "SecurityStamp", "UserName" },
-                values: new object[] { "b058aa70-e170-46e6-8d93-3cb7e32c6656", 0, "d1de201d-7fff-4ebe-8185-86f78d41ff27", "admin@admin.com", "admin", "admin", false, null, "ADMIN@ADMIN.COM", "111111111", "AQAAAAIAAYagAAAAEHIIF5h1kBbyXc1IilCeqRXpzfy6rHIcBJ47A1Vt8JX+fHTS/8mvogwd/MlxAFLq6A==", "81a2219a-af05-4c34-9012-ac7bd82dce02", "111111111" });
+                values: new object[] { "e9eeea18-37ad-4a0b-80ca-9f52a9166aad", 0, "ce9704bd-2279-484d-b9bc-e363a4af1594", "admin@admin.com", "admin", "admin", false, null, "ADMIN@ADMIN.COM", "111111111", "AQAAAAIAAYagAAAAEM5fMVxMS15TLkB6uPiJQACfSOBg7CB0AUbwjqx0+aa61Ac+VsFwSgOuljCTthO5XA==", "2fa9d924-cb0b-4649-80c0-0b83eb98f4ff", "111111111" });
 
             migrationBuilder.InsertData(
                 table: "RoleClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
                 values: new object[,]
                 {
-                    { 1, "MaxBooks", "5", "798c16cb-cbcb-43c9-ac62-64d06a587e66" },
-                    { 2, "MaxDays", "20", "798c16cb-cbcb-43c9-ac62-64d06a587e66" },
-                    { 3, "MaxBooks", "4", "806410f4-0d26-4fba-b392-e7d7cfb9c429" },
-                    { 4, "MaxDays", "12", "806410f4-0d26-4fba-b392-e7d7cfb9c429" }
+                    { 1, "MaxBooks", "5", "96079ce3-c881-4b86-8579-b571f82792c7" },
+                    { 2, "MaxDays", "20", "96079ce3-c881-4b86-8579-b571f82792c7" },
+                    { 3, "MaxBooks", "4", "13a02ff0-629a-4081-acbb-8db62a9dbaf5" },
+                    { 4, "MaxDays", "12", "13a02ff0-629a-4081-acbb-8db62a9dbaf5" }
                 });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "170a7be7-9aa8-40ea-8443-2341f74008a4", "b058aa70-e170-46e6-8d93-3cb7e32c6656" });
+                values: new object[] { "e742e8fa-5a87-40f5-b45a-59c5287289a8", "e9eeea18-37ad-4a0b-80ca-9f52a9166aad" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Author_FullName",
-                table: "Author",
+                name: "IX_Authors_FullName",
+                table: "Authors",
                 column: "FullName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Book_AuthorId",
-                table: "Book",
+                name: "IX_Books_AuthorId",
+                table: "Books",
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Book_CategoryId",
-                table: "Book",
+                name: "IX_Books_CategoryId",
+                table: "Books",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Book_Isbn",
-                table: "Book",
+                name: "IX_Books_Isbn",
+                table: "Books",
                 column: "Isbn",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Book_PublisherId",
-                table: "Book",
+                name: "IX_Books_PublisherId",
+                table: "Books",
                 column: "PublisherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Borrow_BookId",
-                table: "Borrow",
+                name: "IX_Borrows_BookId",
+                table: "Borrows",
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Borrow_UserId",
-                table: "Borrow",
+                name: "IX_Borrows_UserId",
+                table: "Borrows",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_ParentCategoryId",
-                table: "Category",
+                name: "IX_Categories_ParentCategoryId",
+                table: "Categories",
                 column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
@@ -420,7 +420,7 @@ namespace LMS.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Borrow");
+                name: "Borrows");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
@@ -438,7 +438,7 @@ namespace LMS.Data.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Book");
+                name: "Books");
 
             migrationBuilder.DropTable(
                 name: "Roles");
@@ -447,13 +447,13 @@ namespace LMS.Data.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Author");
+                name: "Authors");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Publisher");
+                name: "Publishers");
         }
     }
 }

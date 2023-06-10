@@ -1,7 +1,8 @@
 using LMS.Data.Extensions;
 using LMS.Service.Extensions;
-using LMS.Web.Middlewares;
 using NToastNotify;
+
+//TODO handle the visible of borrow operations buttons
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
@@ -28,6 +29,6 @@ app.MapControllerRoute(
     "areas",
     "{area:exists}/{controller}/{action}/{id?}");
 
-app.UseInitialRequest();
+//app.UseInitialRequest();
 app.UseNToastNotify();
 app.Run();

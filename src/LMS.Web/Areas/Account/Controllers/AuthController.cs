@@ -26,8 +26,6 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel viewModel)
     {
-        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
-
         if (!ModelState.IsValid)
         {
             ModelState.AddModelError(string.Empty,
@@ -53,7 +51,6 @@ public class AuthController : Controller
         string? returnUrl = HttpContext.Request.Query["returnUrl"];
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             return Redirect(returnUrl);
-
         return RedirectToAction("Index", "Home", new { area = "Admin" });
     }
 
@@ -68,8 +65,6 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult ResetPassword(ResetPasswordViewModel viewModel)
     {
-        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
-
         return View(viewModel);
     }
 
@@ -84,8 +79,6 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegisterViewModel viewModel)
     {
-        if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
-
         if (!ModelState.IsValid)
         {
             ModelState.AddModelError(string.Empty, "Your credentials aren't confirmed.");
@@ -106,7 +99,7 @@ public class AuthController : Controller
             Password = viewModel.Password,
             IsRememberMe = true
         });
-        return RedirectToAction("List", "Book", new { area = "Home" });
+        return RedirectToAction("All", "Book", new { area = "Home" });
     }
 
     [Authorize]

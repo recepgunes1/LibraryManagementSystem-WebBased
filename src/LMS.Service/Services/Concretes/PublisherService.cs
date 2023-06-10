@@ -42,7 +42,7 @@ public class PublisherService : IPublisherService
         var publisher = await _unitOfWork.GetRepository<Publisher>().GetAsync(p => p.Id == viewModel.Id);
         _mapper.Map(viewModel, publisher);
         publisher.UpdatedId = await _userService.GetCurrentUserId();
-        publisher.UpdateDateTime = DateTime.UtcNow;
+        publisher.UpdateDateTime = DateTime.Now;
         await _unitOfWork.SaveAsync();
         return true;
     }
@@ -55,14 +55,14 @@ public class PublisherService : IPublisherService
 
         var publisher = await _unitOfWork.GetRepository<Publisher>().GetAsync(p => p.Id == id);
         publisher.DeletedId = await _userService.GetCurrentUserId();
-        publisher.DeleteDateTime = DateTime.UtcNow;
+        publisher.DeleteDateTime = DateTime.Now;
         publisher.IsDeleted = true;
 
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.PublisherId == publisher.Id);
         foreach (var book in books)
         {
             book.DeletedId = await _userService.GetCurrentUserId();
-            book.DeleteDateTime = DateTime.UtcNow;
+            book.DeleteDateTime = DateTime.Now;
             book.IsDeleted = true;
         }
 
@@ -86,7 +86,7 @@ public class PublisherService : IPublisherService
 
     public async Task<Dictionary<string, string>> GetPublishersWithKeyAndNameAsync()
     {
-        var publishers = await _unitOfWork.GetRepository<Publisher>().GetAllAsync();
+        var publishers = await _unitOfWork.GetRepository<Publisher>().GetAllAsync(p => !p.IsDeleted);
         return publishers.ToDictionary(k => k.Id, v => v.Name);
     }
 }

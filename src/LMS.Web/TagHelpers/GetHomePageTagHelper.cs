@@ -28,7 +28,7 @@ public class GetHomePageTagHelper : TagHelper
 
 
         if (role == "lecturer" || role == "student")
-            output.Attributes.SetAttribute("href", "/Home/Book/List");
+            output.Attributes.SetAttribute("href", "/Home/Book/All");
         else if (role == "admin")
             output.Attributes.SetAttribute("href", "/Admin/Home/Index");
         else

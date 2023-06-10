@@ -19,10 +19,8 @@ public class GetFullNameTagHelper : TagHelper
         if (_httpContext.User.Identity is not ClaimsIdentity claimsIdentity) return Task.CompletedTask;
 
         var name = string.Join("", claimsIdentity.Claims
-            .Where(c => c.Type == ClaimTypes.Name)
+            .Where(c => c.Type == ClaimTypes.Email)
             .Select(c => c.Value));
-
-        foreach (var item in claimsIdentity.Claims) Console.WriteLine($"{item.Type} {item.ValueType} {item.Value}");
 
         output.Content.SetHtmlContent(name);
         return base.ProcessAsync(context, output);

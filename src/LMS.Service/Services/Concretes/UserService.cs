@@ -103,30 +103,6 @@ public class UserService : IUserService
         await _signInManager.SignOutAsync();
     }
 
-    // public async Task<IEnumerable<IndexUserViewModel>> GetAllUsersAsync()
-    // {
-    //     var users = await _userManager.Users.ToListAsync();
-    //     var mappedUsers = new List<IndexUserViewModel>();
-    //     foreach (var user in users)
-    //     {
-    //         foreach (var role in _roleManager.Roles)
-    //         {
-    //             if (await _userManager.IsInRoleAsync(user, role.Name!))
-    //             {
-    //                 mappedUsers.Add(new()
-    //                 {
-    //                     Id = user.Id,
-    //                     FirstName = user.FirstName,
-    //                     LastName = user.LastName,
-    //                     Email = user.Email!,
-    //                     Role = role.Name!,
-    //                 });
-    //             }
-    //         }
-    //     }
-    //     return mappedUsers;
-    // }
-
     public async Task<IEnumerable<IndexUserViewModel>> GetAllUsersAsync()
     {
         var users = _userManager.Users;
@@ -194,6 +170,22 @@ public class UserService : IUserService
         await _userManager.RemoveFromRoleAsync(user, oldRole);
         await _userManager.AddToRoleAsync(user, newRole);
         return result;
+    }
+
+    public async Task<string> GetMaxBooksClaimAsync()
+    {
+        var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
+        var claims = await _roleManager.GetClaimsAsync(role);
+        var claim = claims.FirstOrDefault(c => c.Type == "MaxBooks")!;
+        return claim.Value;
+    }
+
+    public async Task<double> GetMaxDaysClaimAsync()
+    {
+        var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
+        var claims = await _roleManager.GetClaimsAsync(role);
+        var claim = claims.FirstOrDefault(c => c.Type == "MaxDays")!;
+        return Convert.ToDouble(claim.Value);
     }
 
     private async Task<User> GetCurrentUserAsync()

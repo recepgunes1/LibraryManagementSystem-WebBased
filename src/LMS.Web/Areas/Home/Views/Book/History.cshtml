@@ -1,17 +1,15 @@
 @{
-    ViewData["Title"] = "Borrows";
+    ViewData["Title"] = "History";
 }
 <div class="row">
     <div class="col-md-10 offset-md-1 mt-5">
-        <table id="borrows" class="table table-striped table-bordered">
+        <table id="borroweds" class="table table-striped table-bordered">
             <thead>
             <tr>
-                <th>User</th>
-                <th>Book</th>
-                <th>IsReturned</th>
-                <th>IsApproved</th>
+                <th>Name</th>
                 <th>BorrowDateTime</th>
                 <th>ReturnDateTime</th>
+                <th>Status</th>
                 <th>Operations</th>
             </tr>
             </thead>
@@ -22,18 +20,15 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $("#borrows").DataTable({
+            $("#borroweds").DataTable({
                 responsive: true,
                 processing: true,
                 ajax: {
-                    url: '@Url.Action("Get", "Borrow", new { Area = "Admin" })',
+                    url: '@Url.Action("GetHistory", "Book", new { Area = "Home" })',
                     dataSrc: ''
                 },
                 columns: [
-                    {data: "user"},
                     {data: "book"},
-                    {data: "isReturned"},
-                    {data: "isApproved"},
             {
                 data: "borrowDateTime",
                 render: function(data, type, row) {
@@ -48,11 +43,12 @@
                     return date.toLocaleString();
                 },
             },
+            {data: "status"},
                     {
                         data: null,
                         render: function(data, type, row) {
                             const disabledClass = row.isVisible ? '' : 'disabled';
-                            return `<a class="btn btn-success mx-2 ${disabledClass}" href="${row.approveLink}">Return</a>`;
+                            return `<a class="btn btn-success mx-2 ${disabledClass}" href="${row.returnUrl}">Return</a>`;
                         },
                     }
                 ]

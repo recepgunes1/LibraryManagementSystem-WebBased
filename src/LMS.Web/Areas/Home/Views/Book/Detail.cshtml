@@ -1,0 +1,51 @@
+@model DetailBookViewModel
+@{
+    ViewData["Title"] = $"Detail of {Model.Name}";
+}
+
+<div class="container mt-5">
+    <div class="card bg-light">
+        <div class="card-body">
+            <h2 class="card-title">@Model.Name</h2>
+            <h6 class="card-subtitle mb-2 text-muted">Author: @Model.Author</h6>
+            <p class="card-text">@Model.Summary</p>
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <strong>ISBN:</strong>
+                </div>
+                <div class="col-sm-9">@Model.Isbn</div>
+
+                <div class="col-sm-3">
+                    <strong>Pages:</strong>
+                </div>
+                <div class="col-sm-9">@Model.Pages</div>
+
+                <div class="col-sm-3">
+                    <strong>Amount:</strong>
+                </div>
+                <div class="col-sm-9">@Model.Amount</div>
+
+                <div class="col-sm-3">
+                    <strong>Published:</strong>
+                </div>
+                <div class="col-sm-9">@Model.PublishedDateTime.ToString("MM/dd/yyyy")</div>
+
+                <div class="col-sm-3">
+                    <strong>Category:</strong>
+                </div>
+                <div class="col-sm-9">@Model.Category</div>
+
+                <div class="col-sm-3">
+                    <strong>Publisher:</strong>
+                </div>
+                <div class="col-sm-9">@Model.Publisher</div>
+            </div>
+
+            <div class="mt-3">
+                <button asp-area="Home" asp-controller="Book" asp-action="Borrow" asp-route-id="@Model.Id" type="button" class="btn btn-primary">Borrow</button>
+            </div>
+        </div>
+    </div>
+</div>

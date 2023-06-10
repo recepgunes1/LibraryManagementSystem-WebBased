@@ -13,6 +13,6 @@ public class Borrow : EntityBase
     public bool IsReturned { get; set; } = false;
     public bool IsApproved { get; set; } = false;
 
-    public DateTime BorrowDateTime { get; set; } = DateTime.UtcNow;
+    public DateTime BorrowDateTime { get; set; } = DateTime.Now;
     public DateTime ReturnDateTime { get; set; } = default!;
 }

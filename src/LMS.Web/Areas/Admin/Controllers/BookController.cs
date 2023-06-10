@@ -31,13 +31,53 @@ public class BookController : Controller
         return View();
     }
 
-    public IActionResult Update(string id)
+    public async Task<IActionResult> Update(string id)
     {
+        var book = await _bookService.GetBookByIdWithUpdateViewModelAsync(id);
+        if (book == null)
+        {
+            _toastNotification.AddErrorToastMessage($"Book doesn't exist. Id: {id}");
+            return RedirectToAction(nameof(Index));
+        }
+
+        book.Authors = await _authorService.GetAuthorsWithKeyAndNameAsync();
+        book.Publishers = await _publisherService.GetPublishersWithKeyAndNameAsync();
+        book.Categories = await _categoryService.GetCategoriesWithKeyAndNameAsync();
+
+        return View(book);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update(UpdateBookViewModel viewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _bookService.UpdateBookAsync(viewModel);
+            if (result)
+            {
+                _toastNotification.AddSuccessToastMessage(
+                    $"Book was updated successfully. Name:{viewModel.Name}");
+                return RedirectToAction(nameof(Index));
+            }
+
+            _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
+            return View();
+        }
+
+        _toastNotification.AddErrorToastMessage("Something went wrong.");
         return View();
     }
 
-    public IActionResult Delete(string id)
+    public async Task<IActionResult> Delete(string id)
     {
+        var result = await _bookService.DeleteBookWithIdAsync(id);
+        if (result)
+        {
+            _toastNotification.AddInfoToastMessage($"The book was deleted successfully. Id: {id}");
+            return RedirectToAction(nameof(Index));
+        }
+
+        _toastNotification.AddErrorToastMessage("Something went wrong.");
         return RedirectToAction(nameof(Index));
     }
 
@@ -80,8 +120,8 @@ public class BookController : Controller
         return Json(books.Select(p => new
         {
             p.Name, p.Category, p.Publisher, p.Author,
-            UpdateLink = Url.Action("Update", "Author", new { Area = "Admin", id = p.Id }),
-            DeleteLink = Url.Action("Delete", "Author", new { Area = "Admin", id = p.Id })
+            UpdateLink = Url.Action("Update", "Book", new { Area = "Admin", id = p.Id }),
+            DeleteLink = Url.Action("Delete", "Book", new { Area = "Admin", id = p.Id })
         }));
     }
 }

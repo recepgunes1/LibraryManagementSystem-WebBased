@@ -6,21 +6,6 @@ namespace LMS.Data.Extensions;
 
 public static class ModelBuilderExtensions
 {
-    public static void RegisterAllEntities<TBase>(this ModelBuilder builder)
-    {
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-            .Where(p => p.FullName!.Contains(nameof(Entity.Entities)));
-
-        var types = assemblies.SelectMany(assembly => assembly.GetExportedTypes())
-            .Where(c => c is { IsClass: true, IsAbstract: false, IsPublic: true } && typeof(TBase).IsAssignableFrom(c));
-
-        foreach (var type in types)
-        {
-            Console.WriteLine(type.FullName);
-            builder.Entity(type);
-        }
-    }
-
     public static void LoadMappings(this ModelBuilder builder)
     {
         var roleStudent = new Role

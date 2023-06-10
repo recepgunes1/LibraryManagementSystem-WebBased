@@ -14,6 +14,6 @@ public interface IRepository<T> where T : class, IEntityBase, new()
         params Expression<Func<T, object>>[] includeProperties);
 
     Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
-    Task<T> GetByGuidAsync(Guid guid);
+    Task<T> GetByIdAsync(string id);
     Task<T> UpdateAsync(T entity);
 }

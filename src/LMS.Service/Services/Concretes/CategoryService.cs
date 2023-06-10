@@ -42,7 +42,7 @@ public class CategoryService : ICategoryService
         var category = await _unitOfWork.GetRepository<Category>().GetAsync(p => p.Id == viewModel.Id);
         _mapper.Map(viewModel, category);
         category.UpdatedId = await _userService.GetCurrentUserId();
-        category.UpdateDateTime = DateTime.UtcNow;
+        category.UpdateDateTime = DateTime.Now;
         await _unitOfWork.SaveAsync();
         return true;
     }
@@ -55,14 +55,14 @@ public class CategoryService : ICategoryService
 
         var category = await _unitOfWork.GetRepository<Category>().GetAsync(p => p.Id == id);
         category.DeletedId = await _userService.GetCurrentUserId();
-        category.DeleteDateTime = DateTime.UtcNow;
+        category.DeleteDateTime = DateTime.Now;
         category.IsDeleted = true;
 
         var children = await _unitOfWork.GetRepository<Category>().GetAllAsync(p => p.ParentCategoryId == category.Id);
         foreach (var child in children)
         {
             child.DeletedId = await _userService.GetCurrentUserId();
-            child.DeleteDateTime = DateTime.UtcNow;
+            child.DeleteDateTime = DateTime.Now;
             child.IsDeleted = true;
         }
 
@@ -71,7 +71,7 @@ public class CategoryService : ICategoryService
         foreach (var book in books)
         {
             book.DeletedId = await _userService.GetCurrentUserId();
-            book.DeleteDateTime = DateTime.UtcNow;
+            book.DeleteDateTime = DateTime.Now;
             book.IsDeleted = true;
         }
 
@@ -109,7 +109,7 @@ public class CategoryService : ICategoryService
 
     public async Task<Dictionary<string, string>> GetCategoriesWithKeyAndNameAsync()
     {
-        var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync();
+        var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync(p => !p.IsDeleted);
         return categories.ToDictionary(k => k.Id, v => v.Name);
         // var finalNodes = context.Categories
         //     .Where(c => !context.Categories.Any(p => p.ParentCategoryId == c.Id))

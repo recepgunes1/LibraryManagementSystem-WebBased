@@ -61,7 +61,7 @@ namespace LMS.Data.Migrations
                     b.HasIndex("FullName")
                         .IsUnique();
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("LMS.Entity.Entities.Book", b =>
@@ -135,7 +135,7 @@ namespace LMS.Data.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Book");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("LMS.Entity.Entities.Borrow", b =>
@@ -191,7 +191,7 @@ namespace LMS.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Borrow");
+                    b.ToTable("Borrows");
                 });
 
             modelBuilder.Entity("LMS.Entity.Entities.Category", b =>
@@ -235,7 +235,7 @@ namespace LMS.Data.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("LMS.Entity.Entities.Publisher", b =>
@@ -274,7 +274,7 @@ namespace LMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publisher");
+                    b.ToTable("Publishers");
                 });
 
             modelBuilder.Entity("LMS.Entity.Entities.Role", b =>
@@ -306,22 +306,22 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "170a7be7-9aa8-40ea-8443-2341f74008a4",
-                            ConcurrencyStamp = "fa5a7994-f6c7-40c9-98a9-32d0278a7d5d",
+                            Id = "e742e8fa-5a87-40f5-b45a-59c5287289a8",
+                            ConcurrencyStamp = "3aae9143-b2ca-48cf-8b49-25889a01faa8",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "806410f4-0d26-4fba-b392-e7d7cfb9c429",
-                            ConcurrencyStamp = "c7ee9cce-3d57-4c4f-8107-cc85e8631b6c",
+                            Id = "13a02ff0-629a-4081-acbb-8db62a9dbaf5",
+                            ConcurrencyStamp = "dd34b7c6-0876-4289-a290-4d143968773b",
                             Name = "lecturer",
                             NormalizedName = "LECTURER"
                         },
                         new
                         {
-                            Id = "798c16cb-cbcb-43c9-ac62-64d06a587e66",
-                            ConcurrencyStamp = "1e50849f-5a01-4f5d-9bb1-03b9256a99b3",
+                            Id = "96079ce3-c881-4b86-8579-b571f82792c7",
+                            ConcurrencyStamp = "f66bee94-b51d-4bcf-a41e-b717060d6b4a",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -390,17 +390,17 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b058aa70-e170-46e6-8d93-3cb7e32c6656",
+                            Id = "e9eeea18-37ad-4a0b-80ca-9f52a9166aad",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d1de201d-7fff-4ebe-8185-86f78d41ff27",
+                            ConcurrencyStamp = "ce9704bd-2279-484d-b9bc-e363a4af1594",
                             Email = "admin@admin.com",
                             FirstName = "admin",
                             LastName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "111111111",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHIIF5h1kBbyXc1IilCeqRXpzfy6rHIcBJ47A1Vt8JX+fHTS/8mvogwd/MlxAFLq6A==",
-                            SecurityStamp = "81a2219a-af05-4c34-9012-ac7bd82dce02",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM5fMVxMS15TLkB6uPiJQACfSOBg7CB0AUbwjqx0+aa61Ac+VsFwSgOuljCTthO5XA==",
+                            SecurityStamp = "2fa9d924-cb0b-4649-80c0-0b83eb98f4ff",
                             UserName = "111111111"
                         });
                 });
@@ -435,28 +435,28 @@ namespace LMS.Data.Migrations
                             Id = 1,
                             ClaimType = "MaxBooks",
                             ClaimValue = "5",
-                            RoleId = "798c16cb-cbcb-43c9-ac62-64d06a587e66"
+                            RoleId = "96079ce3-c881-4b86-8579-b571f82792c7"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "MaxDays",
                             ClaimValue = "20",
-                            RoleId = "798c16cb-cbcb-43c9-ac62-64d06a587e66"
+                            RoleId = "96079ce3-c881-4b86-8579-b571f82792c7"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "MaxBooks",
                             ClaimValue = "4",
-                            RoleId = "806410f4-0d26-4fba-b392-e7d7cfb9c429"
+                            RoleId = "13a02ff0-629a-4081-acbb-8db62a9dbaf5"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "MaxDays",
                             ClaimValue = "12",
-                            RoleId = "806410f4-0d26-4fba-b392-e7d7cfb9c429"
+                            RoleId = "13a02ff0-629a-4081-acbb-8db62a9dbaf5"
                         });
                 });
 
@@ -524,8 +524,8 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "b058aa70-e170-46e6-8d93-3cb7e32c6656",
-                            RoleId = "170a7be7-9aa8-40ea-8443-2341f74008a4"
+                            UserId = "e9eeea18-37ad-4a0b-80ca-9f52a9166aad",
+                            RoleId = "e742e8fa-5a87-40f5-b45a-59c5287289a8"
                         });
                 });
 

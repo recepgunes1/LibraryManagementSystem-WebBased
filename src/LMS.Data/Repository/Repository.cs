@@ -58,9 +58,9 @@ public class Repository<T> : IRepository<T> where T : class, IEntityBase, new()
         return (await query.FirstOrDefaultAsync())!;
     }
 
-    public async Task<T> GetByGuidAsync(Guid guid)
+    public async Task<T> GetByIdAsync(string id)
     {
-        return (await Table.FindAsync(guid))!;
+        return (await Table.FindAsync(id))!;
     }
 
     public async Task<T> UpdateAsync(T entity)
