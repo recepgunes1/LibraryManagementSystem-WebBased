@@ -13,4 +13,6 @@ public interface IBookService
     Task<IEnumerable<UserBorrowViewModel>> GetBorrowedBookHistoryAsync();
     Task<UpdateBookViewModel?> GetBookByIdWithUpdateViewModelAsync(string id);
     Task<DetailBookViewModel?> GetBookByIdWithDetailBookViewModelAsync(string id);
+    Task<Dictionary<string, int>> CountBooksToStatusNonDeletedAsync();
+    Task<(int NonDeleted, int Deleted)> CountBooksAsync();
 }

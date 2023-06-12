@@ -53,13 +53,11 @@ public class PublisherController : Controller
     public async Task<IActionResult> Update(string id)
     {
         var publisher = await _publisherService.GetPublisherByIdWithUpdateViewModelAsync(id);
-        if (publisher == null)
-        {
-            _toastNotification.AddErrorToastMessage($"Publisher doesn't exist. Id: {id}");
-            return RedirectToAction(nameof(Index));
-        }
+        if (publisher != null) return View(publisher);
+        
+        _toastNotification.AddErrorToastMessage($"Publisher doesn't exist. Id: {id}");
+        return RedirectToAction(nameof(Index));
 
-        return View(publisher);
     }
 
     [HttpPost]
@@ -76,11 +74,11 @@ public class PublisherController : Controller
             }
 
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
-            return View(viewModel);
+            return RedirectToAction(nameof(Update));
         }
 
         _toastNotification.AddErrorToastMessage("Something went wrong.");
-        return View(viewModel);
+        return RedirectToAction(nameof(Update));
     }
 
     public async Task<IActionResult> Delete(string id)
@@ -101,7 +99,9 @@ public class PublisherController : Controller
         var publishers = await _publisherService.GetAllPublishersNonDeletedAsync();
         return Json(publishers.Select(p => new
         {
-            p.Name, p.BackStory, p.AmountOfBooks,
+            p.Name,
+            BackStory = $"{(p.BackStory is { Length: > 100 } ? p.BackStory[..100].PadRight(103, '.') : p.BackStory)}",
+            p.AmountOfBooks,
             UpdateLink = Url.Action("Update", "Publisher", new { Area = "Admin", id = p.Id }),
             DeleteLink = Url.Action("Delete", "Publisher", new { Area = "Admin", id = p.Id })
         }));

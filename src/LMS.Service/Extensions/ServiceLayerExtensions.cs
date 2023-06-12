@@ -55,6 +55,7 @@ public static class ServiceLayerExtensions
         service.AddScoped<IUserService, UserService>();
         service.AddScoped<IAuthorService, AuthorService>();
         service.AddScoped<ICategoryService, CategoryService>();
+        service.AddScoped<ISettingsService, SettingsService>();
         service.AddScoped<IPublisherService, PublisherService>();
         service.AddScoped<IBookService, BookService>();
         service.AddScoped<IBorrowService, BorrowService>();

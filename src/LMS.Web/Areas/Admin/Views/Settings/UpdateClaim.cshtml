@@ -1,0 +1,65 @@
+@model UpdateClaimsViewModel
+
+@{
+    ViewData["Title"] = "Update a Claim Value";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3 mt-4">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-6 offset-md-3 bg-light border rounded py-3">
+        <form asp-area="Admin" asp-controller="Settings" asp-action="UpdateClaim" method="post">
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Roles</label>
+                <div class="col-sm-10">
+                    <select id="roleSelect" name="@nameof(Model.Role)" class="form-select">
+                        <option value="" disabled selected>Select a Role</option>
+                        <option value="lecturer">Lecturer</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Claims</label>
+                <div class="col-sm-10">
+                    <select id="claimTypeSelect" name="@nameof(Model.ClaimType)" class="form-select">
+                        <option value="" disabled selected>Select a Claim</option>
+                        <option value="MaxBooks">MaxBooks</option>
+                        <option value="MaxDays">MaxDays</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">New Value</label>
+                <div class="col-sm-10">
+                    <input id="newValue" name="@nameof(Model.NewValue)" class="form-control" asp-for="NewValue"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary w-50">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+    $(document).ready(function() {
+        var roleClaims = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.RoleClaims));
+        
+        $("#roleSelect, #claimTypeSelect").change(function() {
+            var selectedRole = $("#roleSelect").val();
+            var selectedClaimType = $("#claimTypeSelect").val();
+            var newValue = roleClaims[selectedRole][selectedClaimType];
+            $("#newValue").val(newValue);
+        }).change(); // trigger initial change
+    });
+    </script>
+
+}

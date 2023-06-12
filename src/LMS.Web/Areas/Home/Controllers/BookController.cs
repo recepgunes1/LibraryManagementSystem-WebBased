@@ -69,7 +69,7 @@ public class BookController : Controller
         var books = await _bookService.GetBorrowedBookHistoryAsync();
         return Json(books.Select(p => new
         {
-            p.Book, p.BorrowDateTime, p.ReturnDateTime, p.Status,
+            p.Book, p.BorrowDateTime, p.ReturnDateTime, p.Status, p.ButtonVisibility,
             ReturnUrl = Url.Action("Return", "Book", new { Area = "Home", id = p.Id })
         }));
     }

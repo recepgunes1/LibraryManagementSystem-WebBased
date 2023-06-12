@@ -10,4 +10,5 @@ public interface IPublisherService
     Task<IEnumerable<IndexPublisherViewModel>> GetAllPublishersNonDeletedAsync();
     Task<UpdatePublisherViewModel?> GetPublisherByIdWithUpdateViewModelAsync(string id);
     Task<Dictionary<string, string>> GetPublishersWithKeyAndNameAsync();
+    Task<(int NonDeleted, int Deleted)> CountPublishersAsync();
 }

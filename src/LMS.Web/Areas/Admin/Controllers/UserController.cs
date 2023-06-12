@@ -48,12 +48,9 @@ public class UserController : Controller
 
             _toastNotification.AddErrorToastMessage(string.Join(Environment.NewLine,
                 result.Errors.Select(p => p.Description)));
-            viewModel.Roles = await _userService.GetRolesWithIdAndNamesAsync();
-            return View(viewModel);
+            return RedirectToAction(nameof(Create));
         }
-
-        viewModel.Roles = await _userService.GetRolesWithIdAndNamesAsync();
-        return View(viewModel);
+        return RedirectToAction(nameof(Create));
     }
 
     public IActionResult Delete()

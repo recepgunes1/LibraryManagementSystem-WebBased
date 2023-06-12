@@ -9,7 +9,6 @@ public interface ICategoryService
     Task<bool> DeleteCategoryWithIdAsync(string id);
     Task<IEnumerable<IndexCategoryViewModel>> GetAllCategoriesNonDeletedAsync();
     Task<UpdateCategoryViewModel?> GetCategoryByIdWithUpdateViewModelAsync(string id);
-    Task<Dictionary<string, string>> GetParentCategoriesAsync();
-    Task<Dictionary<string, string>> GetParentCategoriesAsync(string name);
     Task<Dictionary<string, string>> GetCategoriesWithKeyAndNameAsync();
+    Task<(int NonDeleted, int Deleted)> CountCategoriesAsync();
 }

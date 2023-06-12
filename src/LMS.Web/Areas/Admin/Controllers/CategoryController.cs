@@ -24,13 +24,9 @@ public class CategoryController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Create()
+    public IActionResult Create()
     {
-        var viewModel = new CreateCategoryViewModel
-        {
-            Parents = await _categoryService.GetParentCategoriesAsync()
-        };
-        return View(viewModel);
+        return View();
     }
 
     [HttpPost]
@@ -42,29 +38,26 @@ public class CategoryController : Controller
             if (result)
             {
                 _toastNotification.AddSuccessToastMessage(
-                    $"Category was created successfully. FullName:{viewModel.Name}");
+                    $"Category was created successfully. Name:{viewModel.Name}");
                 return RedirectToAction(nameof(Index));
             }
 
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
-            return View();
+            return RedirectToAction(nameof(Create));
         }
 
         _toastNotification.AddErrorToastMessage("Something went wrong");
-        return View();
+        return RedirectToAction(nameof(Create));
     }
 
     public async Task<IActionResult> Update(string id)
     {
         var category = await _categoryService.GetCategoryByIdWithUpdateViewModelAsync(id);
-        if (category == null)
-        {
-            _toastNotification.AddErrorToastMessage($"Category doesn't exist. Id: {id}");
-            return RedirectToAction(nameof(Index));
-        }
+        if (category != null) return View(category);
+        
+        _toastNotification.AddErrorToastMessage($"Category doesn't exist. Id: {id}");
+        return RedirectToAction(nameof(Index));
 
-        category.Parents = await _categoryService.GetParentCategoriesAsync(category.Name);
-        return View(category);
     }
 
     [HttpPost]
@@ -81,11 +74,11 @@ public class CategoryController : Controller
             }
 
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
-            return View();
+            return RedirectToAction(nameof(Update));
         }
 
         _toastNotification.AddErrorToastMessage("Something went wrong.");
-        return View();
+        return RedirectToAction(nameof(Update));
     }
 
     public async Task<IActionResult> Delete(string id)
@@ -106,7 +99,9 @@ public class CategoryController : Controller
         var categories = await _categoryService.GetAllCategoriesNonDeletedAsync();
         return Json(categories.Select(p => new
         {
-            p.Name, p.BackStory, p.AmountOfBooks, p.ParentCategory,
+            p.Name,
+            BackStory = $"{(p.BackStory is { Length: > 100 } ? p.BackStory[..100].PadRight(103, '.') : p.BackStory)}",
+            p.AmountOfBooks,
             UpdateLink = Url.Action("Update", "Category", new { Area = "Admin", id = p.Id }),
             DeleteLink = Url.Action("Delete", "Category", new { Area = "Admin", id = p.Id })
         }));

@@ -89,4 +89,11 @@ public class AuthorService : IAuthorService
         var authors = await _unitOfWork.GetRepository<Author>().GetAllAsync(p => !p.IsDeleted);
         return authors.ToDictionary(k => k.Id, v => v.FullName);
     }
+
+    public async Task<(int NonDeleted, int Deleted)> CountAuthorsAsync()
+    {
+        var nonDeleted = await _unitOfWork.GetRepository<Author>().CountAsync(p => !p.IsDeleted);
+        var deleted = await _unitOfWork.GetRepository<Author>().CountAsync(p => p.IsDeleted);
+        return (nonDeleted, deleted);
+    }
 }

@@ -43,11 +43,11 @@ public class AuthorController : Controller
             }
 
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
-            return View();
+            return RedirectToAction(nameof(Create));
         }
 
         _toastNotification.AddErrorToastMessage("Something went wrong");
-        return View();
+        return RedirectToAction(nameof(Create));
     }
 
     public async Task<IActionResult> Update(string id)
@@ -76,11 +76,11 @@ public class AuthorController : Controller
             }
 
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
-            return View();
+            return RedirectToAction(nameof(Update));
         }
 
         _toastNotification.AddErrorToastMessage("Something went wrong.");
-        return View();
+        return RedirectToAction(nameof(Update));
     }
 
     public async Task<IActionResult> Delete(string id)
@@ -101,7 +101,7 @@ public class AuthorController : Controller
         var authors = await _authorService.GetAllAuthorsNonDeletedAsync();
         return Json(authors.Select(p => new
         {
-            p.FullName, p.BackStory, p.AmountOfBooks,
+            p.FullName, BackStory = $"{p.BackStory?[..128]}...", p.AmountOfBooks,
             UpdateLink = Url.Action("Update", "Author", new { Area = "Admin", id = p.Id }),
             DeleteLink = Url.Action("Delete", "Author", new { Area = "Admin", id = p.Id })
         }));

@@ -9,13 +9,12 @@
                 <th>Name</th>
                 <th>BackStory</th>
                 <th>AmountOfBooks</th>
-                <th>ParentCategory</th>
                 <th>Operations</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <th colspan="5">
+                <th colspan="4">
                     <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-primary">Add a New Category</a>
                 </th>
             </tr>
@@ -38,7 +37,6 @@
                     {data: "name"},
                     {data: "backStory"},
                     {data: "amountOfBooks"},
-                    {data: "parentCategory"},
                     {
                         data: null,
                         render: function(data, type, row) {

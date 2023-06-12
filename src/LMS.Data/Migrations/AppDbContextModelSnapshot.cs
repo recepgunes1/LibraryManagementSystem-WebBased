@@ -222,9 +222,6 @@ namespace LMS.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ParentCategoryId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
 
@@ -232,8 +229,6 @@ namespace LMS.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
                 });
@@ -306,22 +301,22 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e742e8fa-5a87-40f5-b45a-59c5287289a8",
-                            ConcurrencyStamp = "3aae9143-b2ca-48cf-8b49-25889a01faa8",
+                            Id = "6ef6a382-dc1e-4ecc-83a4-598038901b65",
+                            ConcurrencyStamp = "69b28287-3b70-4b2d-98bb-7425e23a349f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "13a02ff0-629a-4081-acbb-8db62a9dbaf5",
-                            ConcurrencyStamp = "dd34b7c6-0876-4289-a290-4d143968773b",
+                            Id = "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf",
+                            ConcurrencyStamp = "93b23aa8-8963-47aa-bf84-633153c185b1",
                             Name = "lecturer",
                             NormalizedName = "LECTURER"
                         },
                         new
                         {
-                            Id = "96079ce3-c881-4b86-8579-b571f82792c7",
-                            ConcurrencyStamp = "f66bee94-b51d-4bcf-a41e-b717060d6b4a",
+                            Id = "b24c9abf-9d94-4e54-96da-c0291442b4d7",
+                            ConcurrencyStamp = "e57ddfaa-b89c-40b3-89a4-ecda75ec1ac3",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -390,17 +385,17 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e9eeea18-37ad-4a0b-80ca-9f52a9166aad",
+                            Id = "3907817a-993a-446b-9c2c-5e6b1fe79c21",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce9704bd-2279-484d-b9bc-e363a4af1594",
+                            ConcurrencyStamp = "0fe782cc-d8ba-4288-a8e0-2772740d3353",
                             Email = "admin@admin.com",
                             FirstName = "admin",
                             LastName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "111111111",
-                            PasswordHash = "AQAAAAIAAYagAAAAEM5fMVxMS15TLkB6uPiJQACfSOBg7CB0AUbwjqx0+aa61Ac+VsFwSgOuljCTthO5XA==",
-                            SecurityStamp = "2fa9d924-cb0b-4649-80c0-0b83eb98f4ff",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOjsUI2tmywpl9nU1iXq7VvR/LCtK8kXty4OiWD9RSQnrbNL2RPn5I7t/g4xh+wWjQ==",
+                            SecurityStamp = "ef47d2a2-fa69-49bf-87a2-5bc091c15a47",
                             UserName = "111111111"
                         });
                 });
@@ -435,28 +430,28 @@ namespace LMS.Data.Migrations
                             Id = 1,
                             ClaimType = "MaxBooks",
                             ClaimValue = "5",
-                            RoleId = "96079ce3-c881-4b86-8579-b571f82792c7"
+                            RoleId = "b24c9abf-9d94-4e54-96da-c0291442b4d7"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "MaxDays",
                             ClaimValue = "20",
-                            RoleId = "96079ce3-c881-4b86-8579-b571f82792c7"
+                            RoleId = "b24c9abf-9d94-4e54-96da-c0291442b4d7"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "MaxBooks",
                             ClaimValue = "4",
-                            RoleId = "13a02ff0-629a-4081-acbb-8db62a9dbaf5"
+                            RoleId = "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "MaxDays",
                             ClaimValue = "12",
-                            RoleId = "13a02ff0-629a-4081-acbb-8db62a9dbaf5"
+                            RoleId = "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf"
                         });
                 });
 
@@ -524,8 +519,8 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "e9eeea18-37ad-4a0b-80ca-9f52a9166aad",
-                            RoleId = "e742e8fa-5a87-40f5-b45a-59c5287289a8"
+                            UserId = "3907817a-993a-446b-9c2c-5e6b1fe79c21",
+                            RoleId = "6ef6a382-dc1e-4ecc-83a4-598038901b65"
                         });
                 });
 
@@ -592,15 +587,6 @@ namespace LMS.Data.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LMS.Entity.Entities.Category", b =>
-                {
-                    b.HasOne("LMS.Entity.Entities.Category", "ParentCategory")
-                        .WithMany()
-                        .HasForeignKey("ParentCategoryId");
-
-                    b.Navigation("ParentCategory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

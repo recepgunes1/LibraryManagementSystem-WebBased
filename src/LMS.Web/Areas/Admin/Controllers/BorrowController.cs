@@ -36,7 +36,7 @@ public class BorrowController : Controller
         var borrows = await _borrowService.GetAllBorrowsAsync();
         return Json(borrows.Select(p => new
         {
-            p.Id, p.User, p.Book, p.IsReturned, p.IsApproved, p.BorrowDateTime, p.ReturnDateTime,
+            p.Id, p.User, p.Book, p.Status, p.BorrowDateTime, p.ReturnDateTime, p.ButtonVisibility,
             ApproveLink = Url.Action("Approve", "Borrow", new { Area = "Admin", id = p.Id })
         }));
     }

@@ -61,11 +61,11 @@ public class BookController : Controller
             }
 
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
-            return View();
+            return RedirectToAction(nameof(Update));
         }
 
         _toastNotification.AddErrorToastMessage("Something went wrong.");
-        return View();
+        return RedirectToAction(nameof(Update));
     }
 
     public async Task<IActionResult> Delete(string id)
@@ -106,11 +106,11 @@ public class BookController : Controller
             }
 
             _toastNotification.AddErrorToastMessage("There are conflicting in your data.");
-            return View();
+            return RedirectToAction(nameof(Create));
         }
 
         _toastNotification.AddErrorToastMessage("Something went wrong");
-        return View();
+        return RedirectToAction(nameof(Create));
     }
 
 

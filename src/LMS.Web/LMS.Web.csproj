@@ -9,28 +9,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\LMS.Service\LMS.Service.csproj"/>
-        <ProjectReference Include="..\LMS.Data\LMS.Data.csproj"/>
+        <ProjectReference Include="..\LMS.Service\LMS.Service.csproj" />
+        <ProjectReference Include="..\LMS.Data\LMS.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6"/>
-        <PackageReference Include="NToastNotify" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
+        <PackageReference Include="NToastNotify" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <AdditionalFiles Include="Areas\PartialViews\_DismissibleErrorSummary.cshtml"/>
+        <AdditionalFiles Include="Areas\PartialViews\_DismissibleErrorSummary.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Areas\Admin\Views\Author\"/>
-        <Folder Include="Areas\Admin\Views\Category\"/>
-        <Folder Include="Areas\Admin\Views\Publisher\"/>
+        <Folder Include="Areas\Admin\Views\Author\" />
+        <Folder Include="Areas\Admin\Views\Category\" />
+        <Folder Include="Areas\Admin\Views\Publisher\" />
     </ItemGroup>
 
 </Project>

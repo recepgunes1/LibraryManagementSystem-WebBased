@@ -19,6 +19,7 @@ public interface IUserService
     Task<IdentityResult> CreateNewUserAsync(CreateUserViewModel viewModel);
     Task<UpdateUserViewModel?> GetUserByIdWithUpdateViewModelAsync(string id);
     Task<IdentityResult> UpdateUserAsync(UpdateUserViewModel viewModel);
+    Task<Dictionary<string, int>> CountUsersToRoleAsync();
+    Task<int> GetMaxDaysClaimAsync();
     Task<string> GetMaxBooksClaimAsync();
-    Task<double> GetMaxDaysClaimAsync();
 }

@@ -58,16 +58,8 @@ public class CategoryService : ICategoryService
         category.DeleteDateTime = DateTime.Now;
         category.IsDeleted = true;
 
-        var children = await _unitOfWork.GetRepository<Category>().GetAllAsync(p => p.ParentCategoryId == category.Id);
-        foreach (var child in children)
-        {
-            child.DeletedId = await _userService.GetCurrentUserId();
-            child.DeleteDateTime = DateTime.Now;
-            child.IsDeleted = true;
-        }
+        var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.CategoryId == category.Id);
 
-        var books = await _unitOfWork.GetRepository<Book>()
-            .GetAllAsync(p => p.CategoryId == category.Id || children.Select(s => s.Id).Contains(p.Id));
         foreach (var book in books)
         {
             book.DeletedId = await _userService.GetCurrentUserId();
@@ -93,26 +85,16 @@ public class CategoryService : ICategoryService
         return mapped;
     }
 
-    public async Task<Dictionary<string, string>> GetParentCategoriesAsync()
-    {
-        var categories = await _unitOfWork.GetRepository<Category>()
-            .GetAllAsync(p => !p.IsDeleted && p.ParentCategoryId == null);
-        return categories.ToDictionary(p => p.Id, p => p.Name);
-    }
-
-    public async Task<Dictionary<string, string>> GetParentCategoriesAsync(string name)
-    {
-        var categories = await _unitOfWork.GetRepository<Category>()
-            .GetAllAsync(p => !p.IsDeleted && p.ParentCategoryId == null && p.Name != name);
-        return categories.ToDictionary(p => p.Id, p => p.Name);
-    }
-
     public async Task<Dictionary<string, string>> GetCategoriesWithKeyAndNameAsync()
     {
         var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync(p => !p.IsDeleted);
         return categories.ToDictionary(k => k.Id, v => v.Name);
-        // var finalNodes = context.Categories
-        //     .Where(c => !context.Categories.Any(p => p.ParentCategoryId == c.Id))
-        //     .ToList();
+    }
+
+    public async Task<(int NonDeleted, int Deleted)> CountCategoriesAsync()
+    {
+        var nonDeleted = await _unitOfWork.GetRepository<Category>().CountAsync(p => !p.IsDeleted);
+        var deleted = await _unitOfWork.GetRepository<Category>().CountAsync(p => p.IsDeleted);
+        return (nonDeleted, deleted);
     }
 }

@@ -10,4 +10,5 @@ public interface IAuthorService
     Task<IEnumerable<IndexAuthorViewModel>> GetAllAuthorsNonDeletedAsync();
     Task<UpdateAuthorViewModel?> GetAuthorByIdWithUpdateViewModelAsync(string id);
     Task<Dictionary<string, string>> GetAuthorsWithKeyAndNameAsync();
+    Task<(int NonDeleted, int Deleted)> CountAuthorsAsync();
 }

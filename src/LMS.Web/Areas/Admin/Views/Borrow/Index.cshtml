@@ -8,8 +8,7 @@
             <tr>
                 <th>User</th>
                 <th>Book</th>
-                <th>IsReturned</th>
-                <th>IsApproved</th>
+                <th>Status</th>
                 <th>BorrowDateTime</th>
                 <th>ReturnDateTime</th>
                 <th>Operations</th>
@@ -32,8 +31,7 @@
                 columns: [
                     {data: "user"},
                     {data: "book"},
-                    {data: "isReturned"},
-                    {data: "isApproved"},
+                    {data: "status"},
             {
                 data: "borrowDateTime",
                 render: function(data, type, row) {
@@ -51,8 +49,8 @@
                     {
                         data: null,
                         render: function(data, type, row) {
-                            const disabledClass = row.isVisible ? '' : 'disabled';
-                            return `<a class="btn btn-success mx-2 ${disabledClass}" href="${row.approveLink}">Return</a>`;
+                            const disabledClass = row.buttonVisibility ? '' : 'disabled';
+                            return `<a class="btn btn-success mx-2 ${disabledClass}" href="${row.approveLink}">Approve</a>`;
                         },
                     }
                 ]

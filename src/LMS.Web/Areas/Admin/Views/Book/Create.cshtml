@@ -1,13 +1,12 @@
 @model CreateBookViewModel
-
 @{
     ViewData["Title"] = "Create a New Book";
 }
 <div class="row">
-    <div class="col-md-6 offset-md-3 my-3 border-bottom">
+    <div class="col-md-6 offset-md-3 mt-4">
         <h1>@ViewData["Title"]</h1>
     </div>
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-6 offset-md-3 bg-light border rounded py-3">
         <form asp-area="Admin" asp-controller="Book" asp-action="Create" method="post">
             <div class="row mb-3">
                 <label for="Name" class="col-sm-2 col-form-label">Name</label>

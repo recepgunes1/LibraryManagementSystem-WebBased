@@ -1,3 +1,5 @@
+//Add Sum method following repository
+
 using System.Linq.Expressions;
 using LMS.Core.Entity;
 using LMS.Data.Context;
@@ -67,5 +69,13 @@ public class Repository<T> : IRepository<T> where T : class, IEntityBase, new()
     {
         await Task.Run(() => { Table.Update(entity); });
         return entity;
+    }
+
+    public async Task<decimal> SumAsync(Expression<Func<T, decimal>> selector,
+        Expression<Func<T, bool>>? predicate = null)
+    {
+        IQueryable<T> query = Table;
+        if (predicate != null) query = query.Where(predicate);
+        return await query.SumAsync(selector);
     }
 }

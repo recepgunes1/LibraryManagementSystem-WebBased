@@ -2,8 +2,6 @@ using LMS.Data.Extensions;
 using LMS.Service.Extensions;
 using NToastNotify;
 
-//TODO handle the visible of borrow operations buttons
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews()
@@ -13,7 +11,6 @@ builder.Services.AddControllersWithViews()
         TimeOut = 4_000
     })
     .AddRazorRuntimeCompilation();
-
 builder.Services.LoadDataLayer(builder.Configuration);
 builder.Services.LoadServiceLayer();
 

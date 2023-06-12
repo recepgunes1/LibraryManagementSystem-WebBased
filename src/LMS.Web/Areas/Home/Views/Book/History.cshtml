@@ -47,7 +47,7 @@
                     {
                         data: null,
                         render: function(data, type, row) {
-                            const disabledClass = row.isVisible ? '' : 'disabled';
+                            const disabledClass = row.buttonVisibility ? '' : 'disabled';
                             return `<a class="btn btn-success mx-2 ${disabledClass}" href="${row.returnUrl}">Return</a>`;
                         },
                     }

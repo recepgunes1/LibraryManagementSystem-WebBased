@@ -111,4 +111,25 @@ public class BookService : IBookService
         var mapped = _mapper.Map<DetailBookViewModel>(book);
         return mapped;
     }
+
+    public async Task<Dictionary<string, int>> CountBooksToStatusNonDeletedAsync()
+    {
+        var waitingToApprove = await _unitOfWork.GetRepository<Borrow>()
+            .CountAsync(p => !p.IsDeleted && p.IsReturned && !p.IsApproved);
+        var waitingToReturn = await _unitOfWork.GetRepository<Borrow>().CountAsync(p => !p.IsDeleted && !p.IsReturned);
+        var inLibrary = await _unitOfWork.GetRepository<Book>().SumAsync(s => s.Amount, p => !p.IsDeleted);
+        return new Dictionary<string, int>()
+        {
+            { "WaitingToApprove", waitingToApprove },
+            { "WaitingToReturn", waitingToReturn },
+            { "InLibrary", Convert.ToInt32(inLibrary) }
+        };
+    }
+
+    public async Task<(int NonDeleted, int Deleted)> CountBooksAsync()
+    {
+        var nonDeleted = await _unitOfWork.GetRepository<Book>().CountAsync(p => !p.IsDeleted);
+        var deleted = await _unitOfWork.GetRepository<Book>().CountAsync(p => p.IsDeleted);
+        return (nonDeleted, deleted);
+    }
 }

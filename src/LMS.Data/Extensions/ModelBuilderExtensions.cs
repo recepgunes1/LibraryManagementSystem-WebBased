@@ -85,6 +85,7 @@ public static class ModelBuilderExtensions
             ClaimType = "MaxDays",
             ClaimValue = "12"
         });
+
         builder.Entity<User>(p =>
         {
             p.Ignore(i => i.EmailConfirmed);

@@ -89,4 +89,11 @@ public class PublisherService : IPublisherService
         var publishers = await _unitOfWork.GetRepository<Publisher>().GetAllAsync(p => !p.IsDeleted);
         return publishers.ToDictionary(k => k.Id, v => v.Name);
     }
+
+    public async Task<(int NonDeleted, int Deleted)> CountPublishersAsync()
+    {
+        var nonDeleted = await _unitOfWork.GetRepository<Category>().CountAsync(p => !p.IsDeleted);
+        var deleted = await _unitOfWork.GetRepository<Category>().CountAsync(p => p.IsDeleted);
+        return (nonDeleted, deleted);
+    }
 }

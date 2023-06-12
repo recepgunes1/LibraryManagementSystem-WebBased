@@ -1,0 +1,122 @@
+@model DashboardIndexViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid my-5">
+    <div class="row">
+        <div class="col border rounded bg-light mx-5 py-2">
+            <canvas id="booksChart"></canvas>
+        </div>
+        <div class="col border rounded bg-light mx-5 py-2">
+            <canvas id="usersChart"></canvas>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col border rounded bg-light mx-5 py-2">
+                    <h3>Author</h3>
+                    <h5>
+                        <span class="badge bg-danger">Deleted: @Model.Authors.Deleted</span>
+                        <span class="badge bg-success">NonDeleted: @Model.Authors.NonDeleted</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border rounded bg-light m-5 py-2">
+                    <h3>Books <span class="text-secondary">(distinct)</span></h3>
+                    <h5>
+                        <span class="badge bg-danger">Deleted: @Model.Books.Deleted</span>
+                        <span class="badge bg-success">NonDeleted: @Model.Books.NonDeleted</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border rounded bg-light mx-5 mb-5 py-2">
+                    <h3>Category</h3>
+                    <h5>
+                        <span class="badge bg-danger">Deleted: @Model.Categories.Deleted</span>
+                        <span class="badge bg-success">NonDeleted: @Model.Categories.NonDeleted</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col border rounded bg-light mx-5 py-2">
+                    <h3>Publisher</h3>
+                    <h5>
+                        <span class="badge bg-danger">Deleted: @Model.Publishers.Deleted</span>
+                        <span class="badge bg-success">NonDeleted: @Model.Publishers.NonDeleted</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $.getJSON('@Url.Action("GetBookInfo", "Home", new { Area = "Admin" })', function(data) {
+            var ctx = document.getElementById('booksChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Waiting To Approve', 'Waiting To Return', 'In Library'],
+                    datasets: [{
+                        data: [data.WaitingToApprove, data.WaitingToReturn, data.InLibrary],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)' 
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)' 
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Books',
+                        fontSize: 20
+                    }
+                }
+            });
+        });
+                $.getJSON('@Url.Action("GetUserInfo", "Home", new { Area = "Admin" })', function(data) {
+                    var ctx = document.getElementById('usersChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Admin', 'Lecturer', 'Student'],
+                            datasets: [{
+                                data: [data.admin, data.lecturer, data.student],
+                                backgroundColor: [
+                                    'rgba(75, 192, 192, 0.2)', 
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)', 
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Books',
+                            fontSize: 20
+                            }
+                        }
+                    });
+                });
+
+    </script>
+}

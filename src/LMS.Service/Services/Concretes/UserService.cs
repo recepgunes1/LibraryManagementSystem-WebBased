@@ -113,19 +113,35 @@ public class UserService : IUserService
         foreach (var user in users)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles)
-                if (userRoles.Contains(role.Name!))
-                    mappedUsers.Add(new IndexUserViewModel
-                    {
-                        Id = user.Id,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email!,
-                        Role = role.Name!
-                    });
+            mappedUsers.AddRange(from role in roles
+                where userRoles.Contains(role.Name!)
+                select new IndexUserViewModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email!,
+                    Role = role.Name!
+                });
         }
 
         return mappedUsers;
+    }
+
+    public async Task<string> GetMaxBooksClaimAsync()
+    {
+        var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
+        var claims = await _roleManager.GetClaimsAsync(role);
+        var claim = claims.FirstOrDefault(c => c.Type == "MaxBooks")!;
+        return claim.Value;
+    }
+
+    public async Task<int> GetMaxDaysClaimAsync()
+    {
+        var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
+        var claims = await _roleManager.GetClaimsAsync(role);
+        var claim = claims.FirstOrDefault(c => c.Type == "MaxDays")!;
+        return Convert.ToInt32(claim.Value);
     }
 
 
@@ -172,20 +188,18 @@ public class UserService : IUserService
         return result;
     }
 
-    public async Task<string> GetMaxBooksClaimAsync()
+    public async Task<Dictionary<string, int>> CountUsersToRoleAsync()
     {
-        var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
-        var claims = await _roleManager.GetClaimsAsync(role);
-        var claim = claims.FirstOrDefault(c => c.Type == "MaxBooks")!;
-        return claim.Value;
-    }
-
-    public async Task<double> GetMaxDaysClaimAsync()
-    {
-        var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
-        var claims = await _roleManager.GetClaimsAsync(role);
-        var claim = claims.FirstOrDefault(c => c.Type == "MaxDays")!;
-        return Convert.ToDouble(claim.Value);
+        var admins = await _userManager.GetUsersInRoleAsync("admin");
+        var lecturers = await _userManager.GetUsersInRoleAsync("lecturer");
+        var students = await _userManager.GetUsersInRoleAsync("student");
+        var userCountByRole = new Dictionary<string, int>
+        {
+            { "admin", admins.Count },
+            { "lecturer", lecturers.Count },
+            { "student", students.Count }
+        };
+        return userCountByRole;
     }
 
     private async Task<User> GetCurrentUserAsync()
