@@ -480,6 +480,7 @@ $RECYCLE.BIN/
 .idea
 
 #images
+!src/LMS.Web/wwwroot/images/books/cover.jpg
 *.png
 *.jpg
 *.jpeg
