@@ -84,7 +84,8 @@ public class UserService : IUserService
 
     public async Task<SignInResult> LoginAsync(LoginViewModel viewModel)
     {
-        var user = await _userManager.FindByEmailAsync(viewModel.EmailOrUsername);
+        var user = await _userManager.FindByEmailAsync(viewModel.EmailOrUsername) ??
+                   await _userManager.FindByNameAsync(viewModel.EmailOrUsername);
         if (user == null) return new SignInResult();
         var result =
             await _signInManager.PasswordSignInAsync(user, viewModel.Password, viewModel.IsRememberMe, true);
@@ -138,6 +139,46 @@ public class UserService : IUserService
         return Convert.ToInt32(claim.Value);
     }
 
+    public async Task<string> GetUserEmailToInputAsync(string input)
+    {
+        var user = await _userManager.FindByEmailAsync(input) ??
+                   await _userManager.FindByNameAsync(input);
+        if (user == null)
+        {
+            return string.Empty;
+        }
+
+        return user.Email!;
+    }
+
+    public async Task<string> GetPasswordResetTokenAsync(string input)
+    {
+        var user = await _userManager.FindByEmailAsync(input);
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user!);
+        return token;
+    }
+
+    public async Task<IndexUserViewModel> GetUserByInputAsync(string input)
+    {
+        var user = await _userManager.FindByEmailAsync(input) ??
+                   await _userManager.FindByNameAsync(input);
+        return user == null ? new IndexUserViewModel() : _mapper.Map<IndexUserViewModel>(user);
+    }
+
+    public async Task<IdentityResult> ResetPasswordAsync(string id, string token, string newPassword)
+    {
+        var hasUser = await _userManager.FindByIdAsync(id);
+
+        if (hasUser == null)
+        {
+            return IdentityResult.Failed(new IdentityError
+                { Code = string.Empty, Description = "User does not exist" });
+        }
+
+        var result = await _userManager.ResetPasswordAsync(hasUser, token, newPassword);
+        return result;
+    }
+
     public async Task<int> GetMaxDaysClaimAsync()
     {
         var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
@@ -146,7 +187,6 @@ public class UserService : IUserService
         var claim = claims.FirstOrDefault(c => c.Type == "MaxDays")!;
         return Convert.ToInt32(claim.Value);
     }
-
 
     public async Task<Dictionary<string, string>> GetRolesWithIdAndNamesAsync()
     {

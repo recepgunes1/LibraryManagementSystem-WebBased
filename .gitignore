@@ -484,3 +484,7 @@ $RECYCLE.BIN/
 *.jpg
 *.jpeg
 !src/LMS.Web/wwwroot/images/books/cover.jpg
+
+#docker
+
+container

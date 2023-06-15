@@ -22,4 +22,8 @@ public interface IUserService
     Task<Dictionary<string, int>> CountUsersToRoleAsync();
     Task<int> GetMaxDaysClaimAsync();
     Task<int> GetMaxBooksClaimAsync();
+    Task<string> GetUserEmailToInputAsync(string input);
+    Task<string> GetPasswordResetTokenAsync(string input);
+    Task<IndexUserViewModel> GetUserByInputAsync(string input);
+    Task<IdentityResult> ResetPasswordAsync(string id, string token, string newPassword);
 }

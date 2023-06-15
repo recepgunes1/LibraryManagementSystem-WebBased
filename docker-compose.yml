@@ -1,6 +1,20 @@
 ﻿version: '3.3'
 
 services:
+  s_lms_db:
+    container_name: c_lms_db
+    user: root
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=Recep123."
+    volumes:
+      - ./container/mssql/data:/var/opt/mssql/data
+      - ./container/mssql/log:/var/opt/mssql/log
+      - ./container/mssql/secrets:/var/opt/mssql/secrets
+
   s_lms_web:
     container_name: c_lms_web
     image: lms.web
@@ -10,12 +24,5 @@ services:
     build:
       context: .
       dockerfile: src/LMS.Web/Dockerfile
-
-  s_lms_db:
-    container_name: c_lms_db
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    ports:
-      - "1433:1433"
-    environment:
-      - "ACCEPT_EULA=Y"
-      - "MSSQL_SA_PASSWORD=Recep123."
+    depends_on: 
+      - s_lms_db

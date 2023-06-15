@@ -14,7 +14,8 @@
             <div class="row mb-3">
                 <label asp-for="FullName" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" asp-for="FullName" id="Name"/>
+                    <input type="text" class="form-control" asp-for="FullName"/>
+                    <span asp-validation-for="FullName" class="text-danger"></span>
                 </div>
             </div>
 

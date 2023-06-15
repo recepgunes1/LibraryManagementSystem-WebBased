@@ -9,71 +9,80 @@
     <div class="col-md-6 offset-md-3 bg-light border rounded py-3">
         <form asp-area="Admin" asp-controller="Book" asp-action="Create" method="post" enctype="multipart/form-data">
             <div class="row mb-3">
-                <label for="Name" class="col-sm-2 col-form-label">Name</label>
+                <label asp-for="Name" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" asp-for="Name" id="Name"/>
+                    <input type="text" class="form-control" asp-for="Name"/>
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="Isbn" class="col-sm-2 col-form-label">ISBN</label>
+                <label asp-for="Isbn" class="col-sm-2 col-form-label">ISBN</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" asp-for="Isbn" id="Isbn"/>
+                    <input type="text" class="form-control" asp-for="Isbn"/>
+                    <span asp-validation-for="Isbn" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="Summary" class="col-sm-2 col-form-label">Summary</label>
+                <label asp-for="Summary" class="col-sm-2 col-form-label">Summary</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" asp-for="Summary" id="Summary"></textarea>
+                    <textarea class="form-control" rows="3" asp-for="Summary"></textarea>
+                    <span asp-validation-for="Summary" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="Pages" class="col-sm-2 col-form-label">Pages</label>
+                <label asp-for="Pages" class="col-sm-2 col-form-label">Pages</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" asp-for="Pages" id="Pages"/>
+                    <input type="number" class="form-control" asp-for="Pages"/>
+                    <span asp-validation-for="Pages" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="Amount" class="col-sm-2 col-form-label">Amount</label>
+                <label asp-for="Amount" class="col-sm-2 col-form-label">Amount</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" asp-for="Amount" id="Amount"/>
+                    <input type="number" class="form-control" asp-for="Amount"/>
+                    <span asp-validation-for="Amount" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label for="PublishedDateTime" class="col-sm-2 col-form-label">Published Date</label>
+                <label asp-for="PublishedDateTime" class="col-sm-2 col-form-label">Published Date</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" asp-for="PublishedDateTime" id="PublishedDateTime"/>
+                    <input type="date" class="form-control" asp-for="PublishedDateTime"/>
+                    <span asp-validation-for="PublishedDateTime" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label asp-for="AuthorId" class="col-sm-2 col-form-label"></label>
+                <label asp-for="AuthorId" class="col-sm-2 col-form-label">Author</label>
                 <div class="col-sm-10">
                     <select asp-for="AuthorId" asp-items="@(new SelectList(Model.Authors, "Key", "Value"))" class="form-select">
                         <option value="">Please select</option>
                     </select>
+                    <span asp-validation-for="AuthorId" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label asp-for="CategoryId" class="col-sm-2 col-form-label"></label>
+                <label asp-for="CategoryId" class="col-sm-2 col-form-label">Category</label>
                 <div class="col-sm-10">
                     <select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Key", "Value"))" class="form-select">
                         <option value="">Please select</option>
                     </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label asp-for="PublisherId" class="col-sm-2 col-form-label"></label>
+                <label asp-for="PublisherId" class="col-sm-2 col-form-label">Publisher</label>
                 <div class="col-sm-10">
                     <select asp-for="PublisherId" asp-items="@(new SelectList(Model.Publishers, "Key", "Value"))" class="form-select">
                         <option value="">Please select</option>
                     </select>
+                    <span asp-validation-for="PublisherId" class="text-danger"></span>
                 </div>
             </div>
 
@@ -81,6 +90,7 @@
                 <label asp-for="FormFile" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input type="file" asp-for="FormFile" class="form-control" accept="image/png, image/jpg, image/jpeg"/>
+                    <span asp-validation-for="FormFile" class="text-danger"></span>
                 </div>
             </div>
 

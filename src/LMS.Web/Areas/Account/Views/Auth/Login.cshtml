@@ -13,7 +13,8 @@
                 <div class="form-group row mb-3">
                     <label asp-for="EmailOrUsername" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="EmailOrUsername" class="form-control" value="admin@admin.com">
+                        <input asp-for="EmailOrUsername" class="form-control">
+                        <span asp-validation-for="EmailOrUsername" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -21,7 +22,8 @@
                 <div class="form-group row mb-3">
                     <label asp-for="Password" class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-9">
-                        <input asp-for="Password" class="form-control" value="Admin123.">
+                        <input asp-for="Password" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -35,7 +37,7 @@
                     </div>
 
                     <div class="col d-flex justify-content-end">
-                        <a class="btn btn-outline-secondary w-50" asp-area="Account" asp-controller="Auth" asp-action="ResetPassword">Reset Password</a>
+                        <a class="btn btn-outline-secondary w-50" asp-area="Account" asp-controller="Auth" asp-action="ForgetPassword">Reset Password</a>
                     </div>
                 </div>
 

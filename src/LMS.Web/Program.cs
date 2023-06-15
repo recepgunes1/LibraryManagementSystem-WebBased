@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews()
     })
     .AddRazorRuntimeCompilation();
 builder.Services.LoadDataLayer(builder.Configuration);
-builder.Services.LoadServiceLayer();
+builder.Services.LoadServiceLayer(builder.Configuration);
 
 var app = builder.Build();
 app.UseHttpsRedirection();
