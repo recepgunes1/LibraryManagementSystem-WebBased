@@ -54,10 +54,9 @@ public class CategoryController : Controller
     {
         var category = await _categoryService.GetCategoryByIdWithUpdateViewModelAsync(id);
         if (category != null) return View(category);
-        
+
         _toastNotification.AddErrorToastMessage($"Category doesn't exist. Id: {id}");
         return RedirectToAction(nameof(Index));
-
     }
 
     [HttpPost]

@@ -8,6 +8,9 @@ public static class DbInitializer
 {
     public static void Initialize(AppDbContext context)
     {
+        if (context.Authors.Any() && context.Categories.Any() && context.Publishers.Any() && context.Books.Any())
+            return;
+
         context.Database.EnsureCreated();
 
         var fakeAuthor = new Faker<Author>()
@@ -29,6 +32,13 @@ public static class DbInitializer
         var categories = fakeCategory.Generate(10);
         var publishers = fakePublisher.Generate(10);
 
+        var coverImage = new Image()
+        {
+            FolderName = "books",
+            FileName = "cover.jpg",
+            CreatedId = Guid.Empty.ToString()
+        };
+
         var fakeBook = new Faker<Book>()
             .RuleFor(b => b.Name, f => f.Commerce.ProductName())
             .RuleFor(b => b.Isbn, f => f.Commerce.Ean13())
@@ -36,6 +46,7 @@ public static class DbInitializer
             .RuleFor(b => b.Pages, f => f.Random.Number(50, 1000))
             .RuleFor(b => b.Amount, f => f.Random.Number(1, 100))
             .RuleFor(b => b.PublishedDateTime, f => f.Date.Past(20))
+            .RuleFor(b => b.ImageId, coverImage.Id)
             .RuleFor(b => b.AuthorId, f => f.PickRandom(authors).Id)
             .RuleFor(b => b.CategoryId, f => f.PickRandom(categories).Id)
             .RuleFor(b => b.PublisherId, f => f.PickRandom(publishers).Id)
@@ -44,20 +55,15 @@ public static class DbInitializer
 
         var books = fakeBook.Generate(100);
 
-        if (!context.Authors.Any())
-            context.Authors.AddRange(authors);
+        context.Authors.AddRange(authors);
 
-        if (!context.Categories.Any())
-            context.Categories.AddRange(categories);
+        context.Categories.AddRange(categories);
 
-        if (!context.Publishers.Any())
-            context.Publishers.AddRange(publishers);
+        context.Publishers.AddRange(publishers);
 
+        context.Images.Add(coverImage);
 
-        context.SaveChanges();
-
-        if (!context.Books.Any())
-            context.Books.AddRange(books);
+        context.Books.AddRange(books);
 
         context.SaveChanges();
     }

@@ -67,10 +67,7 @@ public class BookController : Controller
 
         var errors = ModelState.SelectMany(p => p.Value?.Errors ?? new ModelErrorCollection())
             .Select(p => p.ErrorMessage);
-        foreach (var error in errors)
-        {
-            _toastNotification.AddErrorToastMessage(error);
-        }
+        foreach (var error in errors) _toastNotification.AddErrorToastMessage(error);
         return RedirectToAction(nameof(Update));
     }
 
@@ -85,10 +82,7 @@ public class BookController : Controller
 
         var errors = ModelState.SelectMany(p => p.Value?.Errors ?? new ModelErrorCollection())
             .Select(p => p.ErrorMessage);
-        foreach (var error in errors)
-        {
-            _toastNotification.AddErrorToastMessage(error);
-        }
+        foreach (var error in errors) _toastNotification.AddErrorToastMessage(error);
         return RedirectToAction(nameof(Index));
     }
 
@@ -122,10 +116,7 @@ public class BookController : Controller
 
         var errors = ModelState.SelectMany(p => p.Value?.Errors ?? new ModelErrorCollection())
             .Select(p => p.ErrorMessage);
-        foreach (var error in errors)
-        {
-            _toastNotification.AddErrorToastMessage(error);
-        }
+        foreach (var error in errors) _toastNotification.AddErrorToastMessage(error);
 
         return RedirectToAction(nameof(Create));
     }

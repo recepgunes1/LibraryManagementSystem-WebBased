@@ -30,19 +30,15 @@ public class BookController : Controller
         return View();
     }
 
-    //[Authorize(Policy = "BookBorrowingCheck")]
     public async Task<IActionResult> Borrow(string id)
     {
-        foreach (var claim in User.Claims)
-        {
-            Console.WriteLine($"Type:{claim.Type}\t\t\tValue:{claim.Value}");
-        }
         var flag = User.Claims.Any(c => c is { Type: "borrowable", Value: "false" });
         if (flag)
         {
             _toastNotification.AddErrorToastMessage("You can't borrow any books right now. Check you history!");
             return RedirectToAction(nameof(History));
         }
+
         await _borrowService.BorrowAsync(id);
         _toastNotification.AddInfoToastMessage($"The book was borrowed successfully. BookId: {id}");
         return RedirectToAction(nameof(History));

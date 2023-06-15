@@ -48,10 +48,10 @@ public class AuthController : Controller
             return View(viewModel);
         }
 
-        string? returnUrl = HttpContext.Request.Query["returnUrl"];
+        string? returnUrl = HttpContext.Request.Query["ReturnUrl"];
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             return Redirect(returnUrl);
-        return RedirectToAction("Index", "Home", new { area = "Admin" });
+        return Redirect("/");
     }
 
     public IActionResult ResetPassword()

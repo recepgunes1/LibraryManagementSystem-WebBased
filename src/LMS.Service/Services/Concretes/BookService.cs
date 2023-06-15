@@ -60,11 +60,12 @@ public class BookService : IBookService
             image.CreateDateTime = DateTime.Now;
             book.ImageId = image.Id;
             book.Image = image;
-            
+
             _imageService.Delete(viewModel.ImagePath);
-            var oldImage =await _unitOfWork.GetRepository<Image>().GetAsync(p => p.Id == oldImageId);
+            var oldImage = await _unitOfWork.GetRepository<Image>().GetAsync(p => p.Id == oldImageId);
             await _unitOfWork.GetRepository<Image>().DeleteAsync(oldImage);
         }
+
         await _unitOfWork.SaveAsync();
         return true;
     }
@@ -84,7 +85,7 @@ public class BookService : IBookService
         image.DeletedId = await _userService.GetCurrentUserId();
         image.DeleteDateTime = DateTime.Now;
         image.IsDeleted = true;
-        
+
         await _unitOfWork.SaveAsync();
         return true;
     }
@@ -102,7 +103,7 @@ public class BookService : IBookService
         var userId = await _userService.GetCurrentUserId();
 
         var books = await _unitOfWork.GetRepository<Book>()
-            .GetAllAsync(p => !p.IsDeleted,  c => c.Category, a => a.Author, p => p.Publisher, i => i.Image);
+            .GetAllAsync(p => !p.IsDeleted, c => c.Category, a => a.Author, p => p.Publisher, i => i.Image);
 
         var borrows = await _unitOfWork.GetRepository<Borrow>().GetAllAsync(p => p.UserId == userId &&
             !p.IsDeleted && !(p.IsReturned && p.IsApproved));

@@ -7,8 +7,10 @@ using LMS.Service.Services.Abstracts;
 using LMS.Service.Services.Concretes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LMS.Service.Extensions;
@@ -71,5 +73,15 @@ public static class ServiceLayerExtensions
 
         service.AddAutoMapper(Assembly.GetExecutingAssembly());
         return service;
+    }
+
+    public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder builder)
+    {
+        using (var scope = builder.ApplicationServices.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            dbContext.Database.Migrate();
+        }
+        return builder;
     }
 }

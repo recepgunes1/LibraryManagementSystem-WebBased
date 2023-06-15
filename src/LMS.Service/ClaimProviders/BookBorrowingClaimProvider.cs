@@ -18,37 +18,25 @@ public class BookBorrowingClaimProvider : IClaimsTransformation
     {
         var identityUser = principal.Identity as ClaimsIdentity;
 
-        if (identityUser == null)
-        {
-            return principal;
-        }
+        if (identityUser == null) return principal;
 
-        if (!identityUser.IsAuthenticated)
-        {
-            return principal;
-        }
+        if (!identityUser.IsAuthenticated) return principal;
 
         var role = identityUser.FindFirst(ClaimTypes.Role);
-        if (role?.Value == "admin")
-        {
-            return principal;
-        }
+        if (role?.Value == "admin") return principal;
 
         var userId = identityUser.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-        
+
         var bookLimit = Convert.ToInt32(identityUser.FindFirst("MaxBooks")!.Value);
-        
+
         var borrowedBooks =
             await _unitOfWork.GetRepository<Borrow>()
                 .GetAllAsync(p => p.UserId == userId && !p.IsReturned && !p.IsApproved);
 
         var amountOfBorrowed = borrowedBooks.Count;
-        
+
         var waitingToReturn = borrowedBooks.Any(p => (p.ReturnDateTime - p.BorrowDateTime).TotalDays <= 0);
-        
-        Console.WriteLine(amountOfBorrowed);
-        Console.WriteLine(waitingToReturn);
-        
+
         if (amountOfBorrowed >= bookLimit && !waitingToReturn)
         {
             var borrowable = new Claim("borrowable", "false");

@@ -54,10 +54,9 @@ public class PublisherController : Controller
     {
         var publisher = await _publisherService.GetPublisherByIdWithUpdateViewModelAsync(id);
         if (publisher != null) return View(publisher);
-        
+
         _toastNotification.AddErrorToastMessage($"Publisher doesn't exist. Id: {id}");
         return RedirectToAction(nameof(Index));
-
     }
 
     [HttpPost]

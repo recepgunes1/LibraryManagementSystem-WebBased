@@ -4,6 +4,9 @@ services:
   s_lms_web:
     container_name: c_lms_web
     image: lms.web
+    ports:
+      - "8080:80"
+      - "8081:443"
     build:
       context: .
       dockerfile: src/LMS.Web/Dockerfile

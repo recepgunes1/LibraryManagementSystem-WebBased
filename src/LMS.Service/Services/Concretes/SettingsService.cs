@@ -33,15 +33,9 @@ public class SettingsService : ISettingsService
             var claims = await _roleManager.GetClaimsAsync(role);
             var claimsDict = new Dictionary<string, string>();
 
-            foreach (var claim in claims)
-            {
-                claimsDict[claim.Type] = claim.Value;
-            }
+            foreach (var claim in claims) claimsDict[claim.Type] = claim.Value;
 
-            if (claimsDict.Count > 0)
-            {
-                roleClaims[role.Name!] = claimsDict;
-            }
+            if (claimsDict.Count > 0) roleClaims[role.Name!] = claimsDict;
         }
 
         return roleClaims;
@@ -51,24 +45,17 @@ public class SettingsService : ISettingsService
     {
         var role = await _roleManager.FindByNameAsync(roleName);
         if (role == null)
-        {
             return IdentityResult.Failed(new IdentityError
                 { Code = string.Empty, Description = "Role does not exist." });
-        }
 
         var claims = await _roleManager.GetClaimsAsync(role);
         var claim = claims.FirstOrDefault(p => p.Type == claimType);
         if (claim == null)
-        {
             return IdentityResult.Failed(new IdentityError
                 { Code = string.Empty, Description = $"Claim does not exist for {role.Name!} role." });
-        }
 
         var remove = await _roleManager.RemoveClaimAsync(role, claim);
-        if (!remove.Succeeded)
-        {
-            return remove;
-        }
+        if (!remove.Succeeded) return remove;
 
         var newClaim = new Claim(claimType, claimValue);
         var result = await _roleManager.AddClaimAsync(role, newClaim);

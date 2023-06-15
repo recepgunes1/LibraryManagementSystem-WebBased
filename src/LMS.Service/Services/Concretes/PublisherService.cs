@@ -61,10 +61,7 @@ public class PublisherService : IPublisherService
         publisher.IsDeleted = true;
 
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.PublisherId == publisher.Id);
-        foreach (var book in books)
-        {
-            await _bookService.DeleteBookWithIdAsync(book.Id);
-        }
+        foreach (var book in books) await _bookService.DeleteBookWithIdAsync(book.Id);
 
         await _unitOfWork.SaveAsync();
         return true;

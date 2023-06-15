@@ -19,7 +19,7 @@ public class Book : EntityBase
 
     public string AuthorId { get; set; } = null!;
     public Author Author { get; set; } = null!;
-    
+
     public string ImageId { get; set; } = null!;
     public Image Image { get; set; } = null!;
 

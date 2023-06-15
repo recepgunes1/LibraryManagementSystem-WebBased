@@ -62,10 +62,7 @@ public class CategoryService : ICategoryService
 
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.CategoryId == category.Id);
 
-        foreach (var book in books)
-        {
-            await _bookService.DeleteBookWithIdAsync(book.Id);
-        }
+        foreach (var book in books) await _bookService.DeleteBookWithIdAsync(book.Id);
 
         await _unitOfWork.SaveAsync();
         return true;

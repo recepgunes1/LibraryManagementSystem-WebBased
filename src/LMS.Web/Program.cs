@@ -28,4 +28,5 @@ app.MapControllerRoute(
 app.MapDefaultControllerRoute();
 
 app.UseNToastNotify();
+app.MigrateDatabase();
 app.Run();

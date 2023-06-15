@@ -50,6 +50,7 @@ public class UserController : Controller
                 result.Errors.Select(p => p.Description)));
             return RedirectToAction(nameof(Create));
         }
+
         return RedirectToAction(nameof(Create));
     }
 
