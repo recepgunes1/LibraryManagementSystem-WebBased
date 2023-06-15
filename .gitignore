@@ -478,3 +478,8 @@ $RECYCLE.BIN/
 
 #rider
 .idea
+
+#images
+*.png
+*.jpg
+*.jpeg

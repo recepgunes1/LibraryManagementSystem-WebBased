@@ -11,12 +11,14 @@ public class CategoryService : ICategoryService
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserService _userService;
+    private readonly IBookService _bookService;
 
-    public CategoryService(IMapper mapper, IUnitOfWork unitOfWork, IUserService userService)
+    public CategoryService(IMapper mapper, IUnitOfWork unitOfWork, IUserService userService, IBookService bookService)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _userService = userService;
+        _bookService = bookService;
     }
 
     public async Task<bool> CreateNewCategoryAsync(CreateCategoryViewModel viewModel)
@@ -62,9 +64,7 @@ public class CategoryService : ICategoryService
 
         foreach (var book in books)
         {
-            book.DeletedId = await _userService.GetCurrentUserId();
-            book.DeleteDateTime = DateTime.Now;
-            book.IsDeleted = true;
+            await _bookService.DeleteBookWithIdAsync(book.Id);
         }
 
         await _unitOfWork.SaveAsync();

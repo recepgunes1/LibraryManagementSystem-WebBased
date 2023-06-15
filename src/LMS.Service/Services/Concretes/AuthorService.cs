@@ -11,12 +11,14 @@ public class AuthorService : IAuthorService
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserService _userService;
+    private readonly IBookService _bookService;
 
-    public AuthorService(IUnitOfWork unitOfWork, IMapper mapper, IUserService userService)
+    public AuthorService(IUnitOfWork unitOfWork, IMapper mapper, IUserService userService, IBookService bookService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _userService = userService;
+        _bookService = bookService;
     }
 
     public async Task<bool> CreateNewAuthorAsync(CreateAuthorViewModel viewModel)
@@ -61,9 +63,7 @@ public class AuthorService : IAuthorService
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.AuthorId == author.Id);
         foreach (var book in books)
         {
-            book.DeletedId = await _userService.GetCurrentUserId();
-            book.DeleteDateTime = DateTime.Now;
-            book.IsDeleted = true;
+            await _bookService.DeleteBookWithIdAsync(book.Id);
         }
 
         await _unitOfWork.SaveAsync();

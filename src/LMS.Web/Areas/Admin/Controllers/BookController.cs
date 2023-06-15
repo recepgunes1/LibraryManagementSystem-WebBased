@@ -2,6 +2,7 @@ using LMS.Entity.ViewModels.Book;
 using LMS.Service.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NToastNotify;
 
 namespace LMS.Web.Areas.Admin.Controllers;
@@ -64,7 +65,12 @@ public class BookController : Controller
             return RedirectToAction(nameof(Update));
         }
 
-        _toastNotification.AddErrorToastMessage("Something went wrong.");
+        var errors = ModelState.SelectMany(p => p.Value?.Errors ?? new ModelErrorCollection())
+            .Select(p => p.ErrorMessage);
+        foreach (var error in errors)
+        {
+            _toastNotification.AddErrorToastMessage(error);
+        }
         return RedirectToAction(nameof(Update));
     }
 
@@ -77,7 +83,12 @@ public class BookController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        _toastNotification.AddErrorToastMessage("Something went wrong.");
+        var errors = ModelState.SelectMany(p => p.Value?.Errors ?? new ModelErrorCollection())
+            .Select(p => p.ErrorMessage);
+        foreach (var error in errors)
+        {
+            _toastNotification.AddErrorToastMessage(error);
+        }
         return RedirectToAction(nameof(Index));
     }
 
@@ -109,7 +120,13 @@ public class BookController : Controller
             return RedirectToAction(nameof(Create));
         }
 
-        _toastNotification.AddErrorToastMessage("Something went wrong");
+        var errors = ModelState.SelectMany(p => p.Value?.Errors ?? new ModelErrorCollection())
+            .Select(p => p.ErrorMessage);
+        foreach (var error in errors)
+        {
+            _toastNotification.AddErrorToastMessage(error);
+        }
+
         return RedirectToAction(nameof(Create));
     }
 
@@ -119,7 +136,7 @@ public class BookController : Controller
         var books = await _bookService.GetAllBooksNonDeletedAsync();
         return Json(books.Select(p => new
         {
-            p.Name, p.Category, p.Publisher, p.Author,
+            p.Name, p.Category, p.Publisher, p.Author, Cover = p.ImagePath,
             UpdateLink = Url.Action("Update", "Book", new { Area = "Admin", id = p.Id }),
             DeleteLink = Url.Action("Delete", "Book", new { Area = "Admin", id = p.Id })
         }));

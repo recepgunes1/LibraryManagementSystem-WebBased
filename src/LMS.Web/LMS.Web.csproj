@@ -31,6 +31,7 @@
         <Folder Include="Areas\Admin\Views\Author\" />
         <Folder Include="Areas\Admin\Views\Category\" />
         <Folder Include="Areas\Admin\Views\Publisher\" />
+        <Folder Include="wwwroot\images\books\" />
     </ItemGroup>
 
 </Project>

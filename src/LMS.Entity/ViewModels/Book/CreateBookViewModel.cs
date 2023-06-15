@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace LMS.Entity.ViewModels.Book;
 
 public class CreateBookViewModel
@@ -11,6 +13,7 @@ public class CreateBookViewModel
     public string AuthorId { get; set; } = null!;
     public string CategoryId { get; set; } = null!;
     public string PublisherId { get; set; } = null!;
+    public IFormFile FormFile { get; set; } = null!;
 
     public Dictionary<string, string>? Authors { get; set; }
     public Dictionary<string, string>? Categories { get; set; }

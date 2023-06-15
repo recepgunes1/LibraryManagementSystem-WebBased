@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using LMS.Entity.Entities;
 using LMS.Entity.ViewModels.User;
@@ -128,17 +129,25 @@ public class UserService : IUserService
         return mappedUsers;
     }
 
-    public async Task<string> GetMaxBooksClaimAsync()
+    public async Task<int> GetMaxBooksClaimAsync()
     {
         var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
+        if (role.Name == "admin")
+        {
+            return 0;
+        }
         var claims = await _roleManager.GetClaimsAsync(role);
         var claim = claims.FirstOrDefault(c => c.Type == "MaxBooks")!;
-        return claim.Value;
+        return Convert.ToInt32(claim.Value);
     }
 
     public async Task<int> GetMaxDaysClaimAsync()
     {
         var role = (await _roleManager.FindByNameAsync(await GetCurrentUserRole()))!;
+        if (role.Name == "admin")
+        {
+            return 0;
+        }
         var claims = await _roleManager.GetClaimsAsync(role);
         var claim = claims.FirstOrDefault(c => c.Type == "MaxDays")!;
         return Convert.ToInt32(claim.Value);
@@ -204,7 +213,8 @@ public class UserService : IUserService
 
     private async Task<User> GetCurrentUserAsync()
     {
-        var user = await _userManager.FindByNameAsync(_httpContext.User.Identity!.Name!);
+        
+        var user = await _userManager.FindByNameAsync(_httpContext.User.FindFirst(ClaimTypes.Name)!.Value);
         if (user != null) return user;
 
         return new User();

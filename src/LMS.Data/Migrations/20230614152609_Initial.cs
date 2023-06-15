@@ -54,6 +54,26 @@ namespace LMS.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FolderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleteDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Publishers",
                 columns: table => new
                 {
@@ -124,6 +144,7 @@ namespace LMS.Data.Migrations
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PublisherId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ImageId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -145,6 +166,12 @@ namespace LMS.Data.Migrations
                         name: "FK_Books_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Books_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -302,31 +329,31 @@ namespace LMS.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6ef6a382-dc1e-4ecc-83a4-598038901b65", "69b28287-3b70-4b2d-98bb-7425e23a349f", "admin", "ADMIN" },
-                    { "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf", "93b23aa8-8963-47aa-bf84-633153c185b1", "lecturer", "LECTURER" },
-                    { "b24c9abf-9d94-4e54-96da-c0291442b4d7", "e57ddfaa-b89c-40b3-89a4-ecda75ec1ac3", "student", "STUDENT" }
+                    { "21eb080d-19f4-4e1d-bd54-654e4518f823", "f2831a3b-8244-4f70-a647-bb196ea8ea5d", "admin", "ADMIN" },
+                    { "7bd17dc5-44b7-434c-af35-7921c0cc2e69", "3e2206f8-2e20-497d-84fd-d1119a697230", "student", "STUDENT" },
+                    { "9c924839-4294-47d0-bb0c-ab6e8b8905b4", "1e1171bc-b5a2-447a-b42e-7ff2589081d5", "lecturer", "LECTURER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "SecurityStamp", "UserName" },
-                values: new object[] { "3907817a-993a-446b-9c2c-5e6b1fe79c21", 0, "0fe782cc-d8ba-4288-a8e0-2772740d3353", "admin@admin.com", "admin", "admin", false, null, "ADMIN@ADMIN.COM", "111111111", "AQAAAAIAAYagAAAAEOjsUI2tmywpl9nU1iXq7VvR/LCtK8kXty4OiWD9RSQnrbNL2RPn5I7t/g4xh+wWjQ==", "ef47d2a2-fa69-49bf-87a2-5bc091c15a47", "111111111" });
+                values: new object[] { "79934370-55cb-418e-92ab-97ed95d1c5d5", 0, "b02d9e3c-81f6-48a5-ace8-025bc7b3f2df", "admin@admin.com", "admin", "admin", false, null, "ADMIN@ADMIN.COM", "111111111", "AQAAAAIAAYagAAAAEHhxSUz2L4y2bhgHPLOs8ZDzYU2zdiGgQ2l76M4mToQU4FRD/oo1zgtFMWdY+GmBkA==", "75c836f8-6670-4515-bfc6-e5cc96049cbb", "111111111" });
 
             migrationBuilder.InsertData(
                 table: "RoleClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
                 values: new object[,]
                 {
-                    { 1, "MaxBooks", "5", "b24c9abf-9d94-4e54-96da-c0291442b4d7" },
-                    { 2, "MaxDays", "20", "b24c9abf-9d94-4e54-96da-c0291442b4d7" },
-                    { 3, "MaxBooks", "4", "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf" },
-                    { 4, "MaxDays", "12", "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf" }
+                    { 1, "MaxBooks", "5", "7bd17dc5-44b7-434c-af35-7921c0cc2e69" },
+                    { 2, "MaxDays", "20", "7bd17dc5-44b7-434c-af35-7921c0cc2e69" },
+                    { 3, "MaxBooks", "4", "9c924839-4294-47d0-bb0c-ab6e8b8905b4" },
+                    { 4, "MaxDays", "12", "9c924839-4294-47d0-bb0c-ab6e8b8905b4" }
                 });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "6ef6a382-dc1e-4ecc-83a4-598038901b65", "3907817a-993a-446b-9c2c-5e6b1fe79c21" });
+                values: new object[] { "21eb080d-19f4-4e1d-bd54-654e4518f823", "79934370-55cb-418e-92ab-97ed95d1c5d5" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_FullName",
@@ -343,6 +370,11 @@ namespace LMS.Data.Migrations
                 name: "IX_Books_CategoryId",
                 table: "Books",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_ImageId",
+                table: "Books",
+                column: "ImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_Isbn",
@@ -440,6 +472,9 @@ namespace LMS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Publishers");

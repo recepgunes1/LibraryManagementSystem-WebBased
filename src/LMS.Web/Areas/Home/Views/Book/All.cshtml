@@ -24,6 +24,7 @@
         <table id="books" class="table table-striped table-bordered mt-3">
             <thead>
             <tr>
+                <th>Cover</th>
                 <th>Name</th>
                 <th>Author</th>
                 <th>Category</th>
@@ -46,6 +47,10 @@
                     dataSrc: ''
                 },
                 columns: [
+                    {data: null,
+                    render: function(data, type, row) {
+                      return `<img class="mx-auto d-block img-thumbnail" style="height: 6em; width: 6em;" src="${row.cover}"/>`
+                    }},             
                     {data: "name"},
                     {data: "author"},
                     {data: "category"},

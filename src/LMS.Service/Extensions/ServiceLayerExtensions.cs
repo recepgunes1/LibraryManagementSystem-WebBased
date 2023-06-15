@@ -1,8 +1,11 @@
 using System.Reflection;
 using LMS.Data.Context;
 using LMS.Entity.Entities;
+using LMS.Service.ClaimProviders;
+using LMS.Service.Helpers.ImageService;
 using LMS.Service.Services.Abstracts;
 using LMS.Service.Services.Concretes;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -52,6 +55,10 @@ public static class ServiceLayerExtensions
             opt.SlidingExpiration = true;
         });
 
+        service.AddAuthorizationCore(opt =>
+            opt.AddPolicy("BookBorrowingCheck",
+                builder => builder.RequireAuthenticatedUser().RequireClaim("borrowable", "true")));
+
         service.AddScoped<IUserService, UserService>();
         service.AddScoped<IAuthorService, AuthorService>();
         service.AddScoped<ICategoryService, CategoryService>();
@@ -59,6 +66,9 @@ public static class ServiceLayerExtensions
         service.AddScoped<IPublisherService, PublisherService>();
         service.AddScoped<IBookService, BookService>();
         service.AddScoped<IBorrowService, BorrowService>();
+        service.AddScoped<IImageService, ImageService>();
+        service.AddScoped<IClaimsTransformation, BookBorrowingClaimProvider>();
+
         service.AddAutoMapper(Assembly.GetExecutingAssembly());
         return service;
     }

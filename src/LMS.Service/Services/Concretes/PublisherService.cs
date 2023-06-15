@@ -11,12 +11,14 @@ public class PublisherService : IPublisherService
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserService _userService;
+    private readonly IBookService _bookService;
 
-    public PublisherService(IMapper mapper, IUnitOfWork unitOfWork, IUserService userService)
+    public PublisherService(IMapper mapper, IUnitOfWork unitOfWork, IUserService userService, IBookService bookService)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _userService = userService;
+        _bookService = bookService;
     }
 
     public async Task<bool> CreateNewPublisherAsync(CreatePublisherViewModel viewModel)
@@ -61,9 +63,7 @@ public class PublisherService : IPublisherService
         var books = await _unitOfWork.GetRepository<Book>().GetAllAsync(p => p.PublisherId == publisher.Id);
         foreach (var book in books)
         {
-            book.DeletedId = await _userService.GetCurrentUserId();
-            book.DeleteDateTime = DateTime.Now;
-            book.IsDeleted = true;
+            await _bookService.DeleteBookWithIdAsync(book.Id);
         }
 
         await _unitOfWork.SaveAsync();

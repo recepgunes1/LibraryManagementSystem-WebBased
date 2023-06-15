@@ -101,7 +101,9 @@ public class AuthorController : Controller
         var authors = await _authorService.GetAllAuthorsNonDeletedAsync();
         return Json(authors.Select(p => new
         {
-            p.FullName, BackStory = $"{p.BackStory?[..128]}...", p.AmountOfBooks,
+            p.FullName,
+            BackStory = $"{(p.BackStory is { Length: > 100 } ? p.BackStory[..100].PadRight(103, '.') : p.BackStory)}",
+            p.AmountOfBooks,
             UpdateLink = Url.Action("Update", "Author", new { Area = "Admin", id = p.Id }),
             DeleteLink = Url.Action("Delete", "Author", new { Area = "Admin", id = p.Id })
         }));

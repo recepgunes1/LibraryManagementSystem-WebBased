@@ -25,7 +25,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     "areas",
     "{area:exists}/{controller}/{action}/{id?}");
+app.MapDefaultControllerRoute();
 
-//app.UseInitialRequest();
 app.UseNToastNotify();
 app.Run();

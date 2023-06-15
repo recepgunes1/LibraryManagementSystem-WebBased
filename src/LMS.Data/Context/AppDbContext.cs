@@ -15,6 +15,7 @@ public class AppDbContext : IdentityDbContext<User, Role, string>
     public DbSet<Book> Books { get; set; } = null!;
     public DbSet<Borrow> Borrows { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Image> Images { get; set; } = null!;
     public DbSet<Publisher> Publishers { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)

@@ -7,4 +7,5 @@ public class IndexBookViewModel
     public string Author { get; set; } = null!;
     public string Category { get; set; } = null!;
     public string Publisher { get; set; } = null!;
+    public string ImagePath { get; set; } = null!;
 }

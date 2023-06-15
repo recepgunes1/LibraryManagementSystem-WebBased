@@ -93,6 +93,10 @@ namespace LMS.Data.Migrations
                     b.Property<string>("DeletedId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -129,6 +133,8 @@ namespace LMS.Data.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("Isbn")
                         .IsUnique();
@@ -233,6 +239,46 @@ namespace LMS.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("LMS.Entity.Entities.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeleteDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FolderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("LMS.Entity.Entities.Publisher", b =>
                 {
                     b.Property<string>("Id")
@@ -301,22 +347,22 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6ef6a382-dc1e-4ecc-83a4-598038901b65",
-                            ConcurrencyStamp = "69b28287-3b70-4b2d-98bb-7425e23a349f",
+                            Id = "21eb080d-19f4-4e1d-bd54-654e4518f823",
+                            ConcurrencyStamp = "f2831a3b-8244-4f70-a647-bb196ea8ea5d",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf",
-                            ConcurrencyStamp = "93b23aa8-8963-47aa-bf84-633153c185b1",
+                            Id = "9c924839-4294-47d0-bb0c-ab6e8b8905b4",
+                            ConcurrencyStamp = "1e1171bc-b5a2-447a-b42e-7ff2589081d5",
                             Name = "lecturer",
                             NormalizedName = "LECTURER"
                         },
                         new
                         {
-                            Id = "b24c9abf-9d94-4e54-96da-c0291442b4d7",
-                            ConcurrencyStamp = "e57ddfaa-b89c-40b3-89a4-ecda75ec1ac3",
+                            Id = "7bd17dc5-44b7-434c-af35-7921c0cc2e69",
+                            ConcurrencyStamp = "3e2206f8-2e20-497d-84fd-d1119a697230",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -385,17 +431,17 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3907817a-993a-446b-9c2c-5e6b1fe79c21",
+                            Id = "79934370-55cb-418e-92ab-97ed95d1c5d5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0fe782cc-d8ba-4288-a8e0-2772740d3353",
+                            ConcurrencyStamp = "b02d9e3c-81f6-48a5-ace8-025bc7b3f2df",
                             Email = "admin@admin.com",
                             FirstName = "admin",
                             LastName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "111111111",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOjsUI2tmywpl9nU1iXq7VvR/LCtK8kXty4OiWD9RSQnrbNL2RPn5I7t/g4xh+wWjQ==",
-                            SecurityStamp = "ef47d2a2-fa69-49bf-87a2-5bc091c15a47",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHhxSUz2L4y2bhgHPLOs8ZDzYU2zdiGgQ2l76M4mToQU4FRD/oo1zgtFMWdY+GmBkA==",
+                            SecurityStamp = "75c836f8-6670-4515-bfc6-e5cc96049cbb",
                             UserName = "111111111"
                         });
                 });
@@ -430,28 +476,28 @@ namespace LMS.Data.Migrations
                             Id = 1,
                             ClaimType = "MaxBooks",
                             ClaimValue = "5",
-                            RoleId = "b24c9abf-9d94-4e54-96da-c0291442b4d7"
+                            RoleId = "7bd17dc5-44b7-434c-af35-7921c0cc2e69"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "MaxDays",
                             ClaimValue = "20",
-                            RoleId = "b24c9abf-9d94-4e54-96da-c0291442b4d7"
+                            RoleId = "7bd17dc5-44b7-434c-af35-7921c0cc2e69"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "MaxBooks",
                             ClaimValue = "4",
-                            RoleId = "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf"
+                            RoleId = "9c924839-4294-47d0-bb0c-ab6e8b8905b4"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "MaxDays",
                             ClaimValue = "12",
-                            RoleId = "a51a4dcd-f1c0-4077-a9cb-c84d14db21bf"
+                            RoleId = "9c924839-4294-47d0-bb0c-ab6e8b8905b4"
                         });
                 });
 
@@ -519,8 +565,8 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "3907817a-993a-446b-9c2c-5e6b1fe79c21",
-                            RoleId = "6ef6a382-dc1e-4ecc-83a4-598038901b65"
+                            UserId = "79934370-55cb-418e-92ab-97ed95d1c5d5",
+                            RoleId = "21eb080d-19f4-4e1d-bd54-654e4518f823"
                         });
                 });
 
@@ -557,6 +603,12 @@ namespace LMS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LMS.Entity.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LMS.Entity.Entities.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherId")
@@ -566,6 +618,8 @@ namespace LMS.Data.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Image");
 
                     b.Navigation("Publisher");
                 });
