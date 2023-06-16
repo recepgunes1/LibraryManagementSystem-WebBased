@@ -37,3 +37,11 @@ Before starting with the installation process, ensure to modify the following se
     ```
 
 If everything went well, you should see your new Docker container running!
+
+## Default User Details
+Upon successful installation, the application creates a default user with administrative privileges. The details are as follows:
+
+- **Username:** 111111111
+- **Email:** admin@admin.com
+- **Password:** Admin123.
+- **Role:** admin
