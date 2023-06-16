@@ -38,7 +38,7 @@ namespace LMS.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BackStory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -78,7 +78,7 @@ namespace LMS.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     BackStory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -329,31 +329,31 @@ namespace LMS.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "21eb080d-19f4-4e1d-bd54-654e4518f823", "f2831a3b-8244-4f70-a647-bb196ea8ea5d", "admin", "ADMIN" },
-                    { "7bd17dc5-44b7-434c-af35-7921c0cc2e69", "3e2206f8-2e20-497d-84fd-d1119a697230", "student", "STUDENT" },
-                    { "9c924839-4294-47d0-bb0c-ab6e8b8905b4", "1e1171bc-b5a2-447a-b42e-7ff2589081d5", "lecturer", "LECTURER" }
+                    { "4cbefcfe-2f90-414e-bba3-aa5f34fd5033", "8211a4f2-b9e2-4298-94bc-643d489fe7a3", "student", "STUDENT" },
+                    { "72b7c131-bf3c-4f91-a710-c51338d16107", "215e7af2-a414-4994-a0fd-9c0c35dfcd87", "admin", "ADMIN" },
+                    { "eb4ccf35-2c06-4118-bd72-b0b75f47a3b3", "49e85a4c-ff6d-4197-a08f-2cbb5841f5f1", "lecturer", "LECTURER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "SecurityStamp", "UserName" },
-                values: new object[] { "79934370-55cb-418e-92ab-97ed95d1c5d5", 0, "b02d9e3c-81f6-48a5-ace8-025bc7b3f2df", "admin@admin.com", "admin", "admin", false, null, "ADMIN@ADMIN.COM", "111111111", "AQAAAAIAAYagAAAAEHhxSUz2L4y2bhgHPLOs8ZDzYU2zdiGgQ2l76M4mToQU4FRD/oo1zgtFMWdY+GmBkA==", "75c836f8-6670-4515-bfc6-e5cc96049cbb", "111111111" });
+                values: new object[] { "153c0e2b-1ad1-4937-8332-003cee6e9046", 0, "97d13055-f298-4272-a78d-8b22ca133291", "admin@admin.com", "admin", "admin", false, null, "ADMIN@ADMIN.COM", "111111111", "AQAAAAIAAYagAAAAEGYe70kKlIjNEyLAblFgPpXlIrxPcF55bKe4ivV4HUrs49vMFfed/zFhSIj71Hbasg==", "48a532a9-eec4-4397-8ce5-259b292fad59", "111111111" });
 
             migrationBuilder.InsertData(
                 table: "RoleClaims",
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
                 values: new object[,]
                 {
-                    { 1, "MaxBooks", "5", "7bd17dc5-44b7-434c-af35-7921c0cc2e69" },
-                    { 2, "MaxDays", "20", "7bd17dc5-44b7-434c-af35-7921c0cc2e69" },
-                    { 3, "MaxBooks", "4", "9c924839-4294-47d0-bb0c-ab6e8b8905b4" },
-                    { 4, "MaxDays", "12", "9c924839-4294-47d0-bb0c-ab6e8b8905b4" }
+                    { 1, "MaxBooks", "5", "4cbefcfe-2f90-414e-bba3-aa5f34fd5033" },
+                    { 2, "MaxDays", "20", "4cbefcfe-2f90-414e-bba3-aa5f34fd5033" },
+                    { 3, "MaxBooks", "4", "eb4ccf35-2c06-4118-bd72-b0b75f47a3b3" },
+                    { 4, "MaxDays", "12", "eb4ccf35-2c06-4118-bd72-b0b75f47a3b3" }
                 });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "21eb080d-19f4-4e1d-bd54-654e4518f823", "79934370-55cb-418e-92ab-97ed95d1c5d5" });
+                values: new object[] { "72b7c131-bf3c-4f91-a710-c51338d16107", "153c0e2b-1ad1-4937-8332-003cee6e9046" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_FullName",
@@ -396,6 +396,18 @@ namespace LMS.Data.Migrations
                 name: "IX_Borrows_UserId",
                 table: "Borrows",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Publishers_Name",
+                table: "Publishers",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",

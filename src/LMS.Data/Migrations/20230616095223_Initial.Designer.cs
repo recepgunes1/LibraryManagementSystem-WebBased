@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230614152609_Initial")]
+    [Migration("20230616095223_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -229,7 +229,7 @@ namespace LMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
@@ -238,6 +238,9 @@ namespace LMS.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
@@ -308,7 +311,7 @@ namespace LMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
@@ -317,6 +320,9 @@ namespace LMS.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Publishers");
                 });
@@ -350,22 +356,22 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "21eb080d-19f4-4e1d-bd54-654e4518f823",
-                            ConcurrencyStamp = "f2831a3b-8244-4f70-a647-bb196ea8ea5d",
+                            Id = "72b7c131-bf3c-4f91-a710-c51338d16107",
+                            ConcurrencyStamp = "215e7af2-a414-4994-a0fd-9c0c35dfcd87",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9c924839-4294-47d0-bb0c-ab6e8b8905b4",
-                            ConcurrencyStamp = "1e1171bc-b5a2-447a-b42e-7ff2589081d5",
+                            Id = "eb4ccf35-2c06-4118-bd72-b0b75f47a3b3",
+                            ConcurrencyStamp = "49e85a4c-ff6d-4197-a08f-2cbb5841f5f1",
                             Name = "lecturer",
                             NormalizedName = "LECTURER"
                         },
                         new
                         {
-                            Id = "7bd17dc5-44b7-434c-af35-7921c0cc2e69",
-                            ConcurrencyStamp = "3e2206f8-2e20-497d-84fd-d1119a697230",
+                            Id = "4cbefcfe-2f90-414e-bba3-aa5f34fd5033",
+                            ConcurrencyStamp = "8211a4f2-b9e2-4298-94bc-643d489fe7a3",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -434,17 +440,17 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "79934370-55cb-418e-92ab-97ed95d1c5d5",
+                            Id = "153c0e2b-1ad1-4937-8332-003cee6e9046",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b02d9e3c-81f6-48a5-ace8-025bc7b3f2df",
+                            ConcurrencyStamp = "97d13055-f298-4272-a78d-8b22ca133291",
                             Email = "admin@admin.com",
                             FirstName = "admin",
                             LastName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "111111111",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHhxSUz2L4y2bhgHPLOs8ZDzYU2zdiGgQ2l76M4mToQU4FRD/oo1zgtFMWdY+GmBkA==",
-                            SecurityStamp = "75c836f8-6670-4515-bfc6-e5cc96049cbb",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGYe70kKlIjNEyLAblFgPpXlIrxPcF55bKe4ivV4HUrs49vMFfed/zFhSIj71Hbasg==",
+                            SecurityStamp = "48a532a9-eec4-4397-8ce5-259b292fad59",
                             UserName = "111111111"
                         });
                 });
@@ -479,28 +485,28 @@ namespace LMS.Data.Migrations
                             Id = 1,
                             ClaimType = "MaxBooks",
                             ClaimValue = "5",
-                            RoleId = "7bd17dc5-44b7-434c-af35-7921c0cc2e69"
+                            RoleId = "4cbefcfe-2f90-414e-bba3-aa5f34fd5033"
                         },
                         new
                         {
                             Id = 2,
                             ClaimType = "MaxDays",
                             ClaimValue = "20",
-                            RoleId = "7bd17dc5-44b7-434c-af35-7921c0cc2e69"
+                            RoleId = "4cbefcfe-2f90-414e-bba3-aa5f34fd5033"
                         },
                         new
                         {
                             Id = 3,
                             ClaimType = "MaxBooks",
                             ClaimValue = "4",
-                            RoleId = "9c924839-4294-47d0-bb0c-ab6e8b8905b4"
+                            RoleId = "eb4ccf35-2c06-4118-bd72-b0b75f47a3b3"
                         },
                         new
                         {
                             Id = 4,
                             ClaimType = "MaxDays",
                             ClaimValue = "12",
-                            RoleId = "9c924839-4294-47d0-bb0c-ab6e8b8905b4"
+                            RoleId = "eb4ccf35-2c06-4118-bd72-b0b75f47a3b3"
                         });
                 });
 
@@ -568,8 +574,8 @@ namespace LMS.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "79934370-55cb-418e-92ab-97ed95d1c5d5",
-                            RoleId = "21eb080d-19f4-4e1d-bd54-654e4518f823"
+                            UserId = "153c0e2b-1ad1-4937-8332-003cee6e9046",
+                            RoleId = "72b7c131-bf3c-4f91-a710-c51338d16107"
                         });
                 });
 

@@ -43,13 +43,13 @@
                 responsive: true,
                 processing: true,
                 ajax: {
-                    url: '@Url.Action("GetBorrowable", "Book", new { Area = "Home" })',
+                    url: '@Url.Action("GetBorrowable", "Books", new { Area = "Home" })',
                     dataSrc: ''
                 },
                 columns: [
                     {data: null,
                     render: function(data, type, row) {
-                      return `<img class="mx-auto d-block img-thumbnail" style="height: 6em; width: 6em;" src="${row.cover}"/>`
+                      return `<img class="mx-auto d-block img-thumbnail" style="height: 6em; width: 6em;" src="${row.cover}" alt=""/>`
                     }},             
                     {data: "name"},
                     {data: "author"},

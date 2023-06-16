@@ -17,6 +17,7 @@ services:
 
   s_lms_web:
     container_name: c_lms_web
+    user: root
     image: lms.web
     ports:
       - "8080:80"
@@ -24,5 +25,3 @@ services:
     build:
       context: .
       dockerfile: src/LMS.Web/Dockerfile
-    depends_on: 
-      - s_lms_db

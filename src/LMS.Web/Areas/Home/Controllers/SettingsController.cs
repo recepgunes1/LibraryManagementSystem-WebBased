@@ -1,4 +1,5 @@
 using LMS.Service.Services.Abstracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Web.Areas.Home.Controllers;
@@ -21,10 +22,12 @@ public class SettingsController : Controller
         if (!User.Identity!.IsAuthenticated) return RedirectToAction("Login", "Auth", new { Area = "Account" });
 
         var role = await _userService.GetCurrentUserRole();
-        if (role == "admin") return RedirectToAction("Index", "Home", new { Area = "Admin" });
-        return RedirectToAction("All", "Book", new { Area = "Home" });
+        return role == "admin"
+            ? RedirectToAction("Index", "Home", new { Area = "Admin" })
+            : RedirectToAction("All", "Books", new { Area = "Home" });
     }
 
+    [Authorize(Roles = "admin")]
     public IActionResult RunBogus()
     {
         _settingsService.LoadFakeData();

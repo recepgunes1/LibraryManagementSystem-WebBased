@@ -7,13 +7,13 @@ namespace LMS.Web.Areas.Home.Controllers;
 
 [Area("Home")]
 [Authorize(Roles = "student, lecturer")]
-public class BookController : Controller
+public class BooksController : Controller
 {
     private readonly IBookService _bookService;
     private readonly IBorrowService _borrowService;
     private readonly IToastNotification _toastNotification;
 
-    public BookController(IBookService bookService, IToastNotification toastNotification, IBorrowService borrowService)
+    public BooksController(IBookService bookService, IToastNotification toastNotification, IBorrowService borrowService)
     {
         _bookService = bookService;
         _toastNotification = toastNotification;
@@ -51,7 +51,7 @@ public class BookController : Controller
         return RedirectToAction(nameof(History));
     }
 
-    public async Task<IActionResult> Detail(string id)
+    public async Task<IActionResult> Details(string id)
     {
         var book = await _bookService.GetBookByIdWithDetailBookViewModelAsync(id);
         if (book != null) return View(book);
@@ -59,15 +59,15 @@ public class BookController : Controller
         _toastNotification.AddErrorToastMessage($"Book doesn't exist. Id: {id}");
         return RedirectToAction(nameof(All));
     }
-
+    
     public async Task<IActionResult> GetBorrowable()
     {
         var books = await _bookService.GetBorrowableBooksAsync();
         return Json(books.Select(p => new
         {
             p.Name, p.Category, p.Publisher, p.Author, Cover = p.ImagePath,
-            BorrowLink = Url.Action("Borrow", "Book", new { Area = "Home", id = p.Id }),
-            DetailLink = Url.Action("Detail", "Book", new { Area = "Home", id = p.Id })
+            BorrowLink = Url.Action("Borrow", "Books", new { Area = "Home", id = p.Id }),
+            DetailLink = Url.Action("Details", "Books", new { Area = "Home", id = p.Id })
         }));
     }
 
@@ -77,7 +77,7 @@ public class BookController : Controller
         return Json(books.Select(p => new
         {
             p.Book, p.BorrowDateTime, p.ReturnDateTime, p.Status, p.ButtonVisibility,
-            ReturnUrl = Url.Action("Return", "Book", new { Area = "Home", id = p.Id })
+            ReturnUrl = Url.Action("Return", "Books", new { Area = "Home", id = p.Id })
         }));
     }
 }

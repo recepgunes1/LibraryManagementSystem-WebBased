@@ -13,20 +13,65 @@ public static class DbInitializer
 
         context.Database.EnsureCreated();
 
+        var usedFullNames = new HashSet<string>();
         var fakeAuthor = new Faker<Author>()
-            .RuleFor(a => a.FullName, f => f.Name.FullName())
-            .RuleFor(a => a.BackStory, f => f.Lorem.Paragraph())
-            .RuleFor(b => b.CreatedId, Guid.Empty.ToString());
+            .CustomInstantiator(f =>
+            {
+                string fullName;
+                do
+                {
+                    fullName = f.Name.FullName();
+                } while (usedFullNames.Contains(fullName));
 
+                usedFullNames.Add(fullName);
+
+                return new Author
+                {
+                    FullName = fullName,
+                    BackStory = f.Lorem.Paragraph(),
+                    CreatedId = Guid.Empty.ToString()
+                };
+            });
+
+        var usedDepartmentNames = new HashSet<string>();
         var fakeCategory = new Faker<Category>()
-            .RuleFor(c => c.Name, f => f.Commerce.Department())
-            .RuleFor(c => c.BackStory, f => f.Lorem.Paragraph())
-            .RuleFor(b => b.CreatedId, Guid.Empty.ToString());
+            .CustomInstantiator(f =>
+            {
+                string departmentName;
+                do
+                {
+                    departmentName = f.Commerce.Department();
+                } while (usedDepartmentNames.Contains(departmentName));
 
+                usedDepartmentNames.Add(departmentName);
+
+                return new Category
+                {
+                    Name = departmentName,
+                    BackStory = f.Lorem.Paragraph(),
+                    CreatedId = Guid.Empty.ToString()
+                };
+            });
+
+        var usedCompanyNames = new HashSet<string>();
         var fakePublisher = new Faker<Publisher>()
-            .RuleFor(p => p.Name, f => f.Company.CompanyName())
-            .RuleFor(p => p.BackStory, f => f.Lorem.Paragraph())
-            .RuleFor(b => b.CreatedId, Guid.Empty.ToString());
+            .CustomInstantiator(f =>
+            {
+                string companyName;
+                do
+                {
+                    companyName = f.Company.CompanyName();
+                } while (usedCompanyNames.Contains(companyName));
+
+                usedCompanyNames.Add(companyName);
+
+                return new Publisher
+                {
+                    Name = companyName,
+                    BackStory = f.Lorem.Paragraph(),
+                    CreatedId = Guid.Empty.ToString()
+                };
+            });
 
         var authors = fakeAuthor.Generate(10);
         var categories = fakeCategory.Generate(10);

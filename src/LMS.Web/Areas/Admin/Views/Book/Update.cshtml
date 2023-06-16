@@ -63,7 +63,7 @@
                 <label class="col-sm-2 col-form-label">Author</label>
                 <div class="col-sm-10">
                     <select asp-for="AuthorId" asp-items="@(new SelectList(Model.Authors, "Key", "Value"))" class="form-select">
-                        <option value="">Please select</option>
+                        <option value="" selected readonly>Please select</option>
                     </select>
                     <span asp-validation-for="AuthorId" class="text-danger"></span>
                 </div>
@@ -73,7 +73,7 @@
                 <label class="col-sm-2 col-form-label">Category</label>
                 <div class="col-sm-10">
                     <select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Key", "Value"))" class="form-select">
-                        <option value="">Please select</option>
+                        <option value="" selected readonly>Please select</option>
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
@@ -83,7 +83,7 @@
                 <label class="col-sm-2 col-form-label">Publisher</label>
                 <div class="col-sm-10">
                     <select asp-for="PublisherId" asp-items="@(new SelectList(Model.Publishers, "Key", "Value"))" class="form-select">
-                        <option value="">Please select</option>
+                        <option value="" selected readonly>Please select</option>
                     </select>
                     <span asp-validation-for="PublisherId" class="text-danger"></span>
                 </div>

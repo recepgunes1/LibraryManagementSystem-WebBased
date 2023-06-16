@@ -52,6 +52,8 @@ public static class ModelBuilderExtensions
         builder.Entity<IdentityUserToken<string>>(p => p.ToTable("UserTokens"));
         builder.Entity<Book>(p => p.HasIndex(i => i.Isbn).IsUnique());
         builder.Entity<Author>(p => p.HasIndex(i => i.FullName).IsUnique());
+        builder.Entity<Category>(p => p.HasIndex(i => i.Name).IsUnique());
+        builder.Entity<Publisher>(p => p.HasIndex(i => i.Name).IsUnique());
 
         builder.Entity<Role>().HasData(roleAdmin, roleLecturer, roleStudent);
         builder.Entity<User>().HasData(userAdmin);

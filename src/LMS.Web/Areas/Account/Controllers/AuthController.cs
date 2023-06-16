@@ -50,8 +50,8 @@ public class AuthController : Controller
 
             return View(viewModel);
         }
-
-        string? returnUrl = HttpContext.Request.Query["ReturnUrl"];
+        
+        string? returnUrl = HttpContext.Request.Form["ReturnUrl"];
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             return Redirect(returnUrl);
         return Redirect("/");
@@ -145,7 +145,7 @@ public class AuthController : Controller
             Password = viewModel.Password,
             IsRememberMe = true
         });
-        return RedirectToAction("All", "Book", new { area = "Home" });
+        return RedirectToAction("All", "Books", new { area = "Home" });
     }
 
     [Authorize]
