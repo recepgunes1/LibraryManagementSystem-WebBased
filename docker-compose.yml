@@ -10,10 +10,6 @@ services:
     environment:
       - "ACCEPT_EULA=Y"
       - "MSSQL_SA_PASSWORD=Recep123."
-    volumes:
-      - ./container/mssql/data:/var/opt/mssql/data
-      - ./container/mssql/log:/var/opt/mssql/log
-      - ./container/mssql/secrets:/var/opt/mssql/secrets
 
   s_lms_web:
     container_name: c_lms_web

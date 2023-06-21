@@ -86,7 +86,7 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByEmailAsync(viewModel.EmailOrUsername) ??
                    await _userManager.FindByNameAsync(viewModel.EmailOrUsername);
-        if (user == null) return new SignInResult();
+        if (user == null) return SignInResult.Failed;
         var result =
             await _signInManager.PasswordSignInAsync(user, viewModel.Password, viewModel.IsRememberMe, true);
         return result;

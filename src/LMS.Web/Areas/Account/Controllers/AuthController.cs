@@ -3,6 +3,7 @@ using LMS.Service.Helpers.EmailService;
 using LMS.Service.Services.Abstracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace LMS.Web.Areas.Account.Controllers;
 
@@ -11,11 +12,13 @@ public class AuthController : Controller
 {
     private readonly IUserService _userService;
     private readonly IEmailService _emailService;
+    private readonly IToastNotification _toastNotification;
 
-    public AuthController(IUserService userService, IEmailService emailService)
+    public AuthController(IUserService userService, IEmailService emailService, IToastNotification toastNotification)
     {
         _userService = userService;
         _emailService = emailService;
+        _toastNotification = toastNotification;
     }
 
     public IActionResult Login()
@@ -46,8 +49,8 @@ public class AuthController : Controller
                 ModelState.AddModelError(string.Empty,
                     "Your account has not been confirmed. Please confirm your account or contact support.");
             else
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-
+                ModelState.AddModelError(string.Empty, "User doesn't exist.");
+            
             return View(viewModel);
         }
         
@@ -59,9 +62,7 @@ public class AuthController : Controller
 
     public IActionResult ForgetPassword()
     {
-        Console.WriteLine("worked1-get");
         if (IsUserAuthenticated()) return RedirectToAction(nameof(AccessDenied));
-        Console.WriteLine("worked2-get");
         return View();
     }
 
@@ -69,7 +70,6 @@ public class AuthController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel viewModel)
     {
-        Console.WriteLine("worked1-post");
         var user = await _userService.GetUserByInputAsync(viewModel.EmailOrUsername);
         if (string.IsNullOrEmpty(user.Email))
         {
@@ -81,7 +81,8 @@ public class AuthController : Controller
         var link = Url.Action("ResetPassword", "Auth", new { Area = "Account", userId = user.Id, Token = token },
             HttpContext.Request.Scheme)!;
         await _emailService.SendResetPasswordEmail(link, user.Email);
-        return View(viewModel);
+        _toastNotification.AddSuccessToastMessage("Email was send successfully.");
+        return View();
     }
 
     public IActionResult ResetPassword(string userId, string token)

@@ -1,12 +1,15 @@
 using System.Reflection;
+using FluentValidation;
 using LMS.Data.Context;
 using LMS.Entity.Entities;
 using LMS.Service.ClaimProviders;
+using LMS.Service.ErrorDescribers;
 using LMS.Service.Helpers.EmailService;
 using LMS.Service.Helpers.ImageService;
 using LMS.Service.OptionModels;
 using LMS.Service.Services.Abstracts;
 using LMS.Service.Services.Concretes;
+using LMS.Service.Validators;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -34,8 +37,10 @@ public static class ServiceLayerExtensions
                 opt.SignIn.RequireConfirmedPhoneNumber = false;
                 opt.SignIn.RequireConfirmedEmail = false;
             })
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
+            .AddUserValidator<UserValidator>()
+            .AddErrorDescriber<CustomIdentityErrorDescriber>()
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<AppDbContext>();
 
         service.ConfigureApplicationCookie(opt =>
         {
@@ -74,6 +79,7 @@ public static class ServiceLayerExtensions
         service.AddScoped<IImageService, ImageService>();
         service.AddScoped<IEmailService, EmailService>();
         service.AddScoped<IClaimsTransformation, BookBorrowingClaimProvider>();
+        service.AddTransient<IValidator<Book>, BookValidator>();
 
         service.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
         
